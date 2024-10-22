@@ -1,24 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
-import { MdEdit } from "react-icons/md";
 import axios from "axios";
-import {
-  Chip,
-  CircularProgress,
-  IconButton,
-  Stack,
-  Tooltip,
-} from "@mui/material";
-import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
-import { Edit, Visibility } from "@mui/icons-material";
-import toast from "react-hot-toast";
-import moment from "moment";
 import { ContextPanel } from "../../utils/ContextPanel";
 import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Referal from "../../components/Referal";
+import { Spinner } from "@material-tailwind/react";
 
 const SecondaryReferral = () => {
   const [referralData, setReferralData] = useState(null);
@@ -97,27 +85,6 @@ const SecondaryReferral = () => {
         sort: false,
       },
     },
-    // {
-    //   name: "id",
-    //   label: "View",
-    //   options: {
-    //     filter: false,
-    //     sort: false,
-    //     customBodyRender: (id, value) => {
-    //       return (
-    //         <div className="flex items-center space-x-2">
-    //           <Tooltip title="View" placement="top">
-    //             <IconButton aria-label="View">
-    //               <Link to={"view?id=" + value}>
-    //                 <Visibility />
-    //               </Link>
-    //             </IconButton>
-    //           </Tooltip>
-    //         </div>
-    //       );
-    //     },
-    //   },
-    // },
   ];
   const options = {
     selectableRows: "none",
@@ -141,7 +108,7 @@ const SecondaryReferral = () => {
   return (
     <Layout>
       {loading && (
-        <CircularProgress
+        <Spinner
           disableShrink
           style={{
             marginLeft: "600px",

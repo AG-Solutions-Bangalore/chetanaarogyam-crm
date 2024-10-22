@@ -1,24 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-import MUIDataTable from "mui-datatables";
-import { MdEdit } from "react-icons/md";
-import axios from "axios";
-import {
-  Chip,
-  CircularProgress,
-  IconButton,
-  Stack,
-  Tooltip,
-} from "@mui/material";
-import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
-import { Edit, Visibility } from "@mui/icons-material";
-import toast from "react-hot-toast";
-import moment from "moment";
-import { ContextPanel } from "../../utils/ContextPanel";
-import BASE_URL from "../../base/BaseUrl";
+import React from "react";
 import Layout from "../../layout/Layout";
-import Referal from "../../components/Referal";
+
 
 const Wallet = () => {
   return (

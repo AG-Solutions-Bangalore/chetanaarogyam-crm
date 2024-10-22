@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
-import moment from "moment";
 import { HiMiniMinus } from "react-icons/hi2";
 import { TfiReload } from "react-icons/tfi";
 import { MdCancel } from "react-icons/md";

@@ -1,24 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
-import { MdEdit } from "react-icons/md";
 import axios from "axios";
 import {
-  Chip,
   CircularProgress,
   IconButton,
-  Stack,
   Tooltip,
 } from "@mui/material";
-import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
-import { Edit, Visibility } from "@mui/icons-material";
-import toast from "react-hot-toast";
-import moment from "moment";
 import { ContextPanel } from "../../utils/ContextPanel";
 import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Referal from "../../components/Referal";
+import { EyeDropperIcon } from "@heroicons/react/24/solid";
 
 const DirectReferral = () => {
   const [referralData, setReferralData] = useState(null);
@@ -100,7 +93,7 @@ const DirectReferral = () => {
               <Tooltip title="View" placement="top">
                 <IconButton aria-label="View">
                   <Link to={"view?id=" + value}>
-                    <Visibility />
+                    <EyeDropperIcon />
                   </Link>
                 </IconButton>
               </Tooltip>

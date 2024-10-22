@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { MdKeyboardBackspace } from "react-icons/md";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Input } from "@material-tailwind/react";
-import BASE_URL, { baseURL } from "../base/BaseUrl";
+import  { baseURL } from "../base/BaseUrl";
 import Fields from "../common/TextField/TextField";
 import Logo from "../assets/logo.png";
 
