@@ -5,7 +5,6 @@ import SIgnUp from "./pages/auth/SIgnUp";
 import Maintenance from "./pages/maintenance/Maintenance";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ForgetPassword from "./pages/auth/ForgetPassword";
-import Form from "./pages/dashboard/Form";
 import Profile from "./pages/profile/Profile";
 import ChangePassword from "./pages/profile/ChangePassword";
 import DirectReferral from "./pages/referral/DirectReferral";
@@ -46,7 +45,6 @@ const App = () => {
           element={<ProtectedRoute element={<Download />} />}
         />
 
-        <Route path="/form" element={<ProtectedRoute element={<Form />} />} />
         <Route
           path="/profile"
           element={<ProtectedRoute element={<Profile />} />}

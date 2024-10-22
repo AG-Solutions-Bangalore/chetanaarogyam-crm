@@ -2,16 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
-import {
-  CircularProgress,
-  IconButton,
-  Tooltip,
-} from "@mui/material";
+import { Button, Tooltip } from "@material-tailwind/react";
 import { ContextPanel } from "../../utils/ContextPanel";
 import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Referal from "../../components/Referal";
 import { EyeDropperIcon } from "@heroicons/react/24/solid";
+import { Spinner } from "@material-tailwind/react";
 
 const DirectReferral = () => {
   const [referralData, setReferralData] = useState(null);
@@ -91,11 +88,11 @@ const DirectReferral = () => {
           return (
             <div className="flex items-center space-x-2">
               <Tooltip title="View" placement="top">
-                <IconButton aria-label="View">
+                <Button aria-label="View" className="bg-transparent">
                   <Link to={"view?id=" + value}>
                     <EyeDropperIcon />
                   </Link>
-                </IconButton>
+                </Button>
               </Tooltip>
             </div>
           );
@@ -125,7 +122,7 @@ const DirectReferral = () => {
   return (
     <Layout>
       {loading && (
-        <CircularProgress
+        <Spinner
           disableShrink
           style={{
             marginLeft: "600px",
