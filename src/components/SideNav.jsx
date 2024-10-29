@@ -1,7 +1,5 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import {
-  HomeIcon,
-  TableCellsIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { MdOutlineFileDownload, MdSpaceDashboard } from "react-icons/md";
