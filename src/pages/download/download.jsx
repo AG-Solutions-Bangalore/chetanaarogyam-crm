@@ -57,12 +57,12 @@ const Download = () => {
   };
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
+      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg gap-4">
+        <h3 className="text-center md:text-left text-lg md:text-xl font-bold ">
           Download Referral
         </h3>
       </div>
-      <div className="text-lg bg-white mt-5 rounded-lg p-4  font-sans font-semibold">
+      <div className="text-lg bg-white mt-5 rounded-lg p-4  font-sans font-semibold flex flex-col md:flex-row  items-center gap-4">
         <Button onClick={onSubmit} className="mr-2 bg-blue-500">
           Download Direct Referral
         </Button>

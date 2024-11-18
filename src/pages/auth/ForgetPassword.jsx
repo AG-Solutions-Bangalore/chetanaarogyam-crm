@@ -38,7 +38,7 @@ const ForgetPassword = () => {
       style={{ backgroundImage: `url(${bgImg})` }}
     >
       <section className="flex flex-col lg:flex-row bg-[rgba(255,255,255,0.57)] md:w-[40%] h-[600px] rounded-lg">
-        <div className="flex-1 lg:w-3/5 m-4 lg:m-12 px-4 lg:px-8">
+        <div className="flex-1  m-4   px-4 lg:px-2">
           <div className="flex justify-center">
             <div>
               <img src={Logo} alt="Logo" className="md:ml-9 mb-1" />
@@ -91,7 +91,7 @@ const ForgetPassword = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 size="lg"
-               placeholder="Enter user email"
+                placeholder="Enter user email"
                 className="!border-t-blue-gray-200 focus:!border-t-gray-900"
                 labelProps={{
                   className: "before:content-none after:content-none",
