@@ -113,23 +113,24 @@ function EditCustomers() {
 
       "data"
     );
-    // if (v) {
-    //   setIsButtonDisabled(true);
-    //   axios({
-    // url:`${BASE_URL} + /api/panel-update-customers/${id}`,
-    //     method: "PUT",
-    //     data,
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("login")}`,
-    //     },
-    //   }).then((res) => {
-    //     if (res.data.code == "200") {
-    //       toast.success("Data Inserted Sucessfully");
-    //     } else {
-    //       toast.error("Duplicate Entry");
-    //     }
-    //   });
-    // }
+    if (v) {
+      setIsButtonDisabled(true);
+      axios({
+        url: `${BASE_URL}/api/panel-update-customers/${id}?_method=PUT`,
+        method: "POST",
+        data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }).then((res) => {
+        if (res.data.code == "200") {
+          toast.success("Customer Updated Sucessfully");
+          navigate("/customer");
+        } else {
+          toast.error("Duplicate Entry");
+        }
+      });
+    }
   };
 
   return (

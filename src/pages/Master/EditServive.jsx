@@ -62,27 +62,25 @@ function EditService() {
       services.service_status,
       "edit"
     );
-    // if (document.getElementById("dowRecp").reportValidity()) {
-    //   setIsButtonDisabled(true);
-    //   axios({
-    //     url: `${BASE_URL}/api/panel-create-service`,
-    //     method: "POST",
-    //     data,
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //     },
-    //   })
-    //     .then((res) => {
-    //       if (res.data.code === "200") {
-    //         toast.success("Service updated successfully");
-    //         navigate("/master-service");
-    //       } else {
-    //         toast.error("Duplicate entry or error updating");
-    //       }
-    //     })
-    //     .catch((err) => toast.error("Failed to update service"))
-    //     .finally(() => setIsButtonDisabled(false));
-    // }
+    if (document.getElementById("dowRecp").reportValidity()) {
+      axios({
+        url: `${BASE_URL}/api/panel-update-service/${id}?_method=PUT`,
+        method: "POST",
+        data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => {
+          if (res.data.code == "200") {
+            toast.success("Service updated successfully");
+            navigate("/master-service");
+          } else {
+            toast.error("Duplicate entry or error updating");
+          }
+        })
+        .catch((err) => toast.error("Failed to update service"));
+    }
   };
 
   return (
@@ -120,7 +118,6 @@ function EditService() {
               required
               size="small"
               inputProps={{ maxLength: 10 }}
-              disabled
             />
             <FormControl fullWidth size="small">
               <InputLabel>Status</InputLabel>

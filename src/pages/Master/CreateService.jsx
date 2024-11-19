@@ -47,24 +47,24 @@ function CreateService() {
     var v = document.getElementById("dowRecp").reportValidity();
     e.preventDefault();
     console.log(services.service_name, "", services.service_amount, "data");
-    // if (v) {
-    //   setIsButtonDisabled(true);
-    //   axios({
-    //     url: BASE_URL + "/api/panel-create-service",
-    //     method: "POST",
-    //     data,
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("login")}`,
-    //     },
-    //   }).then((res) => {
-    //     if (res.data.code == "200") {
-    //       toast.success("Data Inserted Sucessfully");
-    //       history.push("listing");
-    //     } else {
-    //       toast.error("Duplicate Entry");
-    //     }
-    //   });
-    // }
+    if (v) {
+      setIsButtonDisabled(true);
+      axios({
+        url: BASE_URL + "/api/panel-create-service",
+        method: "POST",
+        data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }).then((res) => {
+        if (res.data.code == "200") {
+          toast.success("Servives Created Sucessfully");
+          navigate("/master-service");
+        } else {
+          toast.error("Duplicate Entry");
+        }
+      });
+    }
   };
 
   return (

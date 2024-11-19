@@ -7,6 +7,7 @@ import BASE_URL from "../../base/BaseUrl";
 import { useNavigate, useParams } from "react-router-dom";
 import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
+import { toast } from "react-toastify";
 const status = [
   {
     value: "Active",
@@ -22,9 +23,11 @@ function CreateCustomers() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
+  const [currentYear, setCurrentYear] = useState("");
+
   const [enquires, setEnquires] = useState({
     enquiresid: "",
-    customers_year: "2024-25",
+    customers_year: currentYear,
     fullname: "",
     mobile_no: "",
     email_id: "",
@@ -36,6 +39,24 @@ function CreateCustomers() {
     referral_code: "",
   });
 
+  useEffect(() => {
+    const fetchYearData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/panel-fetch-year`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        setCurrentYear(response.data.year.current_year);
+        console.log(response.data.year.current_year);
+      } catch (error) {
+        console.error("Error fetching year data:", error);
+      }
+    };
+
+    fetchYearData();
+  }, []);
   const onInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "mobile_no" && !validateOnlyDigits(value)) return;
@@ -72,13 +93,12 @@ function CreateCustomers() {
       setService(res.data.service);
     });
   }, []);
-
   const onSubmit = (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("enquiresid", enquires.id);
     data.append("name", enquires.fullname);
-    data.append("customers_year", "2024-25");
+    data.append("customers_year", currentYear);
     data.append("phone", enquires.mobile_no);
     data.append("email", enquires.email_id);
     data.append("address", enquires.address);

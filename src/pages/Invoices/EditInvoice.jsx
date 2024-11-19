@@ -59,7 +59,7 @@ const EditInvoice = () => {
     invoice_amount: "",
     invoice_discount: "",
     invoice_no_of_count: "",
-    invoice_data: "",
+    invoice_date: "",
     invoice_remarks: "",
   });
 
@@ -204,20 +204,24 @@ const EditInvoice = () => {
     var v = document.getElementById("addIndiv").reportValidity();
     e.preventDefault();
 
-    // if (v) {
-    //   axios({
-    //     url: BASE_URL + "/api/panel-update-invoice",
-    //     method: "PUT",
-    //     data,
-    //     headers: {
-    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
-    //     },
-    //   }).then((res) => {
-    //     console.log("receipt", res.data);
-    //     toast.success("Invoices Updated Sucessfully");
-    //     navigate("/invoice");
-    //   });
-    // }
+    if (v) {
+      axios({
+        url: `${BASE_URL}/api/panel-update-invoice/${id}?_method=PUT`,
+        method: "POST",
+        data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }).then((res) => {
+        if (res.data.code == "200") {
+          console.log("receipt", res.data);
+          toast.success("Invoices Updated Sucessfully");
+          navigate("/invoice");
+        } else {
+          toast.error("Duplicate Entry");
+        }
+      });
+    }
   };
   const FetchCustomers = () => {
     axios({
@@ -250,7 +254,23 @@ const EditInvoice = () => {
   useEffect(() => {
     FetchCustomers();
     FetchServices();
+    fetchYearData();
   }, []);
+  const [currentYear, setCurrentYear] = useState("");
+  const fetchYearData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/panel-fetch-year`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      setCurrentYear(response.data.year.current_year);
+      console.log(response.data.year.current_year);
+    } catch (error) {
+      console.error("Error fetching year data:", error);
+    }
+  };
 
   return (
     <Layout>
@@ -259,26 +279,27 @@ const EditInvoice = () => {
         {/* <h3 className="text-center md:text-left text-lg md:text-xl font-bold mb-4">
           Invoice
         </h3> */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 items-center text-center md:text-left md:grid-cols-3 lg:grid-cols-5 gap-4">
           <h4>
-            <strong>Name :</strong> {userdata.fullname}
+            <strong>Name :</strong> {userdata?.fullname || "N/A"}
           </h4>
           <h4>
-            <strong>Ref :</strong> {userdata.customers_ref}
+            <strong>Ref :</strong> {userdata?.customers_ref || ""}
           </h4>
           <h4>
-            <strong>Referred By Code :</strong> {userdata.referred_by_code}
+            <strong>Referred By Code :</strong>{" "}
+            {userdata?.referred_by_code || ""}
           </h4>
           <h4>
             <strong>Invoice Date :</strong>{" "}
-            {moment(donor.invoice_date).format("DD-MM-YYYY")}
+            {moment(donor?.invoice_date).format("DD-MM-YYYY") || ""}
           </h4>
           <h4>
-            <strong>Year :</strong> {finalyear}
+            <strong>Year :</strong> {currentYear || ""}
           </h4>
         </div>
         <form id="addIndiv" onSubmit={onSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
             <TextField
               label="Total Amount"
               inputProps={{ maxLength: 8 }}

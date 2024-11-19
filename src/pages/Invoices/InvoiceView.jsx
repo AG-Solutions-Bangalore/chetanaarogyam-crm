@@ -9,6 +9,9 @@ import Layout from "../../layout/Layout";
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdPrint } from "react-icons/io";
 import PageTitle from "../../components/PageTitle";
+import ReactToPrint from "react-to-print";
+import { useRef } from "react";
+
 import {
   Table,
   TableBody,
@@ -18,14 +21,19 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import TableFooter from "@mui/material/TableFooter";
 
 function InvoiceView() {
   const [theId, setTheId] = useState(0);
   const [customer, setCustomer] = useState([]);
   const [invoices, setInvoices] = useState({});
-  const [invoicesSub, setInvoicesSub] = useState({});
+  const [invoicesSub, setInvoicesSub] = useState([]);
   const { id } = useParams();
+  const componentRef = useRef();
+  const tableRef = useRef(null);
+
   useEffect(() => {
     setTheId(id);
 
@@ -39,7 +47,6 @@ function InvoiceView() {
       setInvoices(res.data.invoice);
       setInvoicesSub(res.data.invoiceSub);
       setCustomer(res.data.customer);
-      setLoader(false);
     });
   }, []);
   const sendEmail = (e) => {
@@ -59,22 +66,59 @@ function InvoiceView() {
     });
   };
 
-  const downloadReceipt = (e) => {
-    e.preventDefault();
-    axios({
-      url: BASE_URL + "/api/panel-download-invoice?id=" + theId,
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((res) => {
-        toast.success("Invoice Downloaded Sucessfully");
+  const handleSavePDF = () => {
+    const input = tableRef.current;
+
+    html2canvas(input, { scale: 2 })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+
+        const margin = 20;
+
+        const availableWidth = pdfWidth - 2 * margin;
+
+        const ratio = Math.min(
+          availableWidth / imgWidth,
+          pdfHeight / imgHeight
+        );
+
+        const imgX = margin;
+        const imgY = 0;
+
+        pdf.addImage(
+          imgData,
+          "PNG",
+          imgX,
+          imgY,
+          imgWidth * ratio,
+          imgHeight * ratio
+        );
+        pdf.save("invoice.pdf");
       })
-      .catch((err) => {
-        toast.error("Invoice Not Downloaded");
+      .catch((error) => {
+        console.error("Error generating PDF: ", error);
       });
   };
+
+  const mergeRefs =
+    (...refs) =>
+    (node) => {
+      refs.forEach((ref) => {
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      });
+    };
 
   return (
     <Layout>
@@ -84,7 +128,7 @@ function InvoiceView() {
           <button
             variant="text"
             className="flex items-center space-x-2"
-            onClick={downloadReceipt}
+            onClick={handleSavePDF}
             style={{
               display: localStorage.getItem("user_type_id") == 4 ? "none" : "",
             }}
@@ -119,16 +163,23 @@ function InvoiceView() {
               Email Sent {invoices.invoice_email_count || 0} Times
             </small>
           </div>
-
-          <button variant="text" className="flex items-center space-x-2">
-            <IoMdPrint />
-            <span>Print Receipt</span>
-          </button>
+          <ReactToPrint
+            trigger={() => (
+              <button variant="text" className="flex items-center space-x-2">
+                <IoMdPrint />
+                <span>Print Receipt</span>
+              </button>
+            )}
+            content={() => componentRef.current}
+          />
         </div>
         <hr></hr>
 
-        <div className="flex flex-col items-center justify-center min-h-screen md:mx-16 p-4 bg-white mt-4">
-          <div className="text-center mb-6">
+        <div
+          className="flex flex-col items-center  min-h-screen md:mx-16 p-4 bg-white "
+          ref={mergeRefs(componentRef, tableRef)}
+        >
+          <div className="text-center mb-6 mt-5">
             <h1 className="text-xl font-bold uppercase">
               Chetana Arogyam Naturopathy Center
             </h1>
@@ -146,15 +197,23 @@ function InvoiceView() {
             {/* Client Details */}
             <div className="flex flex-col   items-center md:flex-row md:justify-between mb-4">
               <div>
-                <p className="font-medium">Name:</p>
-                {customer.fullname}
-                <p className="font-medium">Contact Number:</p>
-                {customer.mobile_no}
+                <p className="font-medium">
+                  Name: <span className="font-normal">{customer.fullname}</span>
+                </p>
+                <p className="font-medium">
+                  Address:{" "}
+                  <span className="font-normal"> {customer.address}</span>
+                </p>
               </div>
               <div>
-                <p className="font-medium">Address:</p> {customer.address}
-                <p className="font-medium">Intersted In:</p>{" "}
-                {customer.interested_in}
+                <p className="font-medium">
+                  Contact Number:{" "}
+                  <span className="font-normal"> {customer.mobile_no}</span>
+                </p>
+                <p className="font-medium">
+                  {/* Contact Number:{" "}
+                  <span className="font-normal"> {customer.mobile_no}</span> */}
+                </p>
               </div>
             </div>
 
@@ -167,76 +226,108 @@ function InvoiceView() {
                 <TableHead className="bg-gray-100">
                   <TableRow>
                     <TableCell className="text-center font-bold border border-gray-300">
-                      Treatment Name
+                      Servives
                     </TableCell>
-                    <TableCell className="text-center font-bold border border-gray-300">
-                      Qty
-                    </TableCell>
-                    <TableCell className="text-center font-bold border border-gray-300">
+                    {/* <TableCell className="text-center font-bold border border-gray-300">
+                      Amount
+                    </TableCell> */}
+                    {/* <TableCell className="text-center font-bold border border-gray-300">
                       Price
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell className="text-center font-bold border border-gray-300">
                       Total
                     </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {[
-                    "Consultation Fee of Doctor",
-                    "Full Body Massage",
-                    "Partial Body Massage (Head/Leg/Back/Chest)",
-                    "Vibro Massage",
-                    "Drainage Therapy",
-                    "Rejuvenating Therapy",
-                    "Lymphatic Drainage Therapy",
-                    "Suna Bath",
-                    "Steam Bath",
-                    "Hip, Arm, and Foot Bath, Reclined Spinal Spray, Spinal Spray",
-                    "Neutral Immersion Bath with Epson Salt",
-                    "Colon Hydrotherapy",
-                    "Underwater Therapy",
-                    "Jacuzzi, Mud Bath, Mud Pack, Ion Foot Detoxifier",
-                    "Acupuncture",
-                  ].map((treatment, index) => (
+                  {invoicesSub.map((treatment, index) => (
                     <TableRow key={index}>
                       <TableCell className="border border-gray-300">
-                        {treatment}
+                        {treatment.invoice_sub_service}
                       </TableCell>
-                      <TableCell className="text-center border border-gray-300"></TableCell>
-                      <TableCell className="text-center border border-gray-300"></TableCell>
-                      <TableCell className="text-center border border-gray-300"></TableCell>
+                      {/* <TableCell className="text-center border border-gray-300">
+                        {" "}
+                        {treatment.invoice_sub_amount}{" "}
+                      </TableCell> */}
+                      {/* <TableCell className="text-center border border-gray-300"></TableCell> */}
+                      <TableCell className="text-center border border-gray-300">
+                        {" "}
+                        {treatment.invoice_sub_amount}{" "}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
                 <TableFooter>
                   <TableRow>
-                    <TableCell colSpan={2} className="border border-gray-300" />
+                    {/* <TableCell colSpan={1} className="border border-gray-300" /> */}
 
-                    <TableCell className="border-t font-bold text-right ">
+                    <TableCell
+                      className="border-t  font-bold bg-gray-100"
+                      sx={{
+                        textAlign: "right",
+                        fontWeight: 700,
+                        fontSize: "15px",
+                        color: "black",
+                      }}
+                    >
                       Total
                     </TableCell>
-                    <TableCell className="border-t font-bold text-center bg-gray-400">
-                      Nil
+                    <TableCell
+                      className="border-t  font-bold text-center "
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: "15px",
+                      }}
+                    >
+                      {invoices.invoice_amount}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={2} className="border border-gray-300" />
+                    {/* <TableCell colSpan={1} className="border border-gray-100" /> */}
 
-                    <TableCell className="border-t text-lg font-bold">
+                    <TableCell
+                      className="border-t text-lg font-bold bg-gray-100"
+                      sx={{
+                        textAlign: "right",
+                        fontWeight: 700,
+                        fontSize: "15px",
+                        color: "black",
+                      }}
+                    >
                       Discount
                     </TableCell>
-                    <TableCell className="border-t font-bold text-center bg-gray-400">
-                      ---
+                    <TableCell
+                      className="border-t font-bold text-center "
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: "15px",
+                      }}
+                    >
+                      {invoices.invoice_discount}
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell colSpan={2} className="border border-gray-300" />
+                    {/* <TableCell colSpan={1} className="border border-gray-100" /> */}
 
-                    <TableCell className="border-t font-bold text-right">
+                    <TableCell
+                      className="border-t font-bold text-right bg-gray-100"
+                      sx={{
+                        textAlign: "right",
+                        fontWeight: 700,
+                        fontSize: "15px",
+                        color: "black",
+                      }}
+                    >
                       Grand Total
                     </TableCell>
-                    <TableCell className="border-t font-bold text-center bg-gray-400">
-                      ---
+                    <TableCell
+                      className="border-t font-bold text-center "
+                      sx={{
+                        fontWeight: 700,
+                        fontSize: "15px",
+                      }}
+                    >
+                      {invoices.invoice_amount - invoices.invoice_discount}
                     </TableCell>
                   </TableRow>
                 </TableFooter>

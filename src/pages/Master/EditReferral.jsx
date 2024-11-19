@@ -82,33 +82,32 @@ function EditReferral() {
 
       "edit ref"
     );
-    // if (document.getElementById("dowRecp").reportValidity()) {
-    //   setIsButtonDisabled(true);
-    //   axios({
-    //     url: ${BASE_URL}/api/panel-create-service,
-    //     method: "POST",
-    //     data,
-    //     headers: {
-    //       Authorization: Bearer ${localStorage.getItem("token")},
-    //     },
-    //   })
-    //     .then((res) => {
-    //       if (res.data.code === "200") {
-    //         toast.success("Service updated successfully");
-    //         navigate("/master-service");
-    //       } else {
-    //         toast.error("Duplicate entry or error updating");
-    //       }
-    //     })
-    //     .catch((err) => toast.error("Failed to update service"))
-    //     .finally(() => setIsButtonDisabled(false));
-    // }
+    if (document.getElementById("dowRecp").reportValidity()) {
+      axios({
+        url: `${BASE_URL}/api/panel-update-team/${id}?_method=PUT`,
+        method: "POST",
+        data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => {
+          if (res.data.code == "200") {
+            toast.success("Service updated successfully");
+            navigate("/master-referral");
+          } else {
+            toast.error("Duplicate entry or error updating");
+          }
+        })
+        .catch((err) => toast.error("Failed to update service"))
+        .finally(() => setIsButtonDisabled(false));
+    }
   };
 
   return (
     <Layout>
       <Box bgcolor="#FFFFFF" p={2} borderRadius={2} mt={4}>
-        <PageTitle title="Edit Referral" backLink="/master-service" />
+        <PageTitle title="Edit Referral" backLink="/master-referral" />
         <form id="dowRecp" autoComplete="off" onSubmit={onSubmit}>
           <Box
             display="grid"

@@ -3,15 +3,13 @@ import Layout from "../../layout/Layout";
 import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
 import { HiMiniMinus } from "react-icons/hi2";
-import { TfiReload } from "react-icons/tfi";
-import { MdCancel } from "react-icons/md";
-import Loader from "./Loader";
+import Loader from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 import CountUp from "react-countup";
+import { TbReload } from "react-icons/tb";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Home = () => {
-  const dateyear = ["2024-25"];
-
   const [referral, setReferral] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
   const [products, setProducts] = useState(null);
@@ -20,13 +18,14 @@ const Home = () => {
   const [loadingRecentOrders, setLoadingRecentOrders] = useState(false); // Loading state for orders
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
+  const [currentYear, setCurrentYear] = useState("");
 
-  // Fetch both data sets but manage loading states separately
   const fetchDirectReferral = async () => {
+    if (!currentYear) return;
     setLoadingRecentOrders(true);
     try {
       const response = await axios.get(
-        `${BASE_URL}/api/panel-fetch-dashboard-data/${dateyear}`,
+        `${BASE_URL}/api/panel-fetch-dashboard-data/${currentYear}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -44,8 +43,26 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchDirectReferral();
+    const fetchYearData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/panel-fetch-year`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        setCurrentYear(response.data.year.current_year);
+        console.log(response.data.year.current_year);
+      } catch (error) {
+        console.error("Error fetching year data:", error);
+      }
+    };
+
+    fetchYearData();
   }, []);
+  useEffect(() => {
+    fetchDirectReferral();
+  }, [currentYear]);
 
   // Reload for recent orders
   const handleReload = () => {
@@ -132,25 +149,25 @@ const Home = () => {
                 <div className="flex gap-3">
                   <div>
                     <HiMiniMinus
-                      className="text-2xl cursor-pointer"
+                      className="text-2xl mt-0.5 cursor-pointer"
                       onClick={() => setShowTable(!showTable)}
                     />
                   </div>
                   <div>
-                    <TfiReload
-                      className="text-xl cursor-pointer"
+                    <TbReload
+                      className="text-xl mt-1 cursor-pointer"
                       onClick={handleReload}
                     />
                   </div>
                   <div>
-                    <MdCancel
-                      className="text-2xl cursor-pointer"
+                    <CloseIcon
+                      className="text-2xl  cursor-pointer"
                       onClick={() => setFullClose(false)}
                     />
                   </div>
                 </div>
               </div>
-              {loadingRecentOrders ? (
+              {/* {loadingRecentOrders ? (
                 <Loader />
               ) : (
                 showTable && (
@@ -287,6 +304,123 @@ const Home = () => {
                                 )}
                               </tbody>
                             )}
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              )} */}
+              {loadingRecentOrders ? (
+                <div className="flex justify-center items-center ">
+                  <Loader />
+                </div>
+              ) : (
+                showTable && (
+                  <div className="flex flex-col">
+                    <div className="overflow-x-auto">
+                      <div className="inline-block min-w-full">
+                        <div className="overflow-hidden">
+                          <table className="min-w-full text-left text-sm font-light text-surface dark:text-white">
+                            {/* Render Table Header */}
+                            <thead className="bg-gray-400 font-medium text-white dark:border-white/10">
+                              <tr>
+                                <th
+                                  scope="col"
+                                  className="px-6 py-4 text-center"
+                                >
+                                  ID
+                                </th>
+                                <th scope="col" className="px-6 py-4">
+                                  Full Name
+                                </th>
+                                <th scope="col" className="px-6 py-4">
+                                  Mobile
+                                </th>
+                                {localStorage.getItem("user_type_id") == 1 ? (
+                                  <>
+                                    <th scope="col" className="px-6 py-4">
+                                      Email
+                                    </th>
+                                    <th scope="col" className="px-6 py-4">
+                                      Referral Id
+                                    </th>
+                                    <th scope="col" className="px-6 py-4">
+                                      No of Referral
+                                    </th>
+                                  </>
+                                ) : (
+                                  <>
+                                    <th scope="col" className="px-6 py-4">
+                                      Area
+                                    </th>
+                                    <th scope="col" className="px-6 py-4">
+                                      Service
+                                    </th>
+                                    <th scope="col" className="px-6 py-4">
+                                      Status
+                                    </th>
+                                  </>
+                                )}
+                              </tr>
+                            </thead>
+
+                            {/* Render Table Body */}
+                            <tbody>
+                              {referral?.inquiry_latest?.length > 0 ? (
+                                referral.inquiry_latest.map((order, key) => (
+                                  <tr
+                                    key={key}
+                                    className="border-b border-neutral-200 bg-white"
+                                  >
+                                    <td className="whitespace-nowrap px-6 py-4 font-medium text-left">
+                                      {order.id}
+                                    </td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-left">
+                                      {order.full_name || order.fullname}
+                                    </td>
+                                    <td className="whitespace-nowrap px-6 py-4 text-left">
+                                      {order.mobile || order.mobile_no}
+                                    </td>
+                                    {localStorage.getItem("user_type_id") ==
+                                    1 ? (
+                                      <>
+                                        <td className="whitespace-nowrap px-6 py-4 text-left">
+                                          {order.email}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-left">
+                                          {order.name}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-left">
+                                          {order.purch}
+                                        </td>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <td className="whitespace-nowrap px-6 py-4 text-left">
+                                          {order.area}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-left">
+                                          {order.interested_in}
+                                        </td>
+                                        <td className="whitespace-nowrap px-6 py-4 text-left">
+                                          {order.inquiry_status}
+                                        </td>
+                                      </>
+                                    )}
+                                  </tr>
+                                ))
+                              ) : (
+                                <tr>
+                                  <td
+                                    colSpan={6}
+                                    className="px-6 py-4 text-center text-2xl font-bold text-blue-grey-600"
+                                  >
+                                    No data available
+                                  </td>
+                                </tr>
+                              )}
+                            </tbody>
                           </table>
                         </div>
                       </div>

@@ -45,7 +45,6 @@ function CreatePayment() {
   today = mm + "/" + dd + "/" + yyyy;
   var todayback = yyyy + "-" + mm + "-" + dd;
 
-
   const [payment, setPayment] = useState({
     invoice_id: id,
     payment_date: todayback,
@@ -101,7 +100,7 @@ function CreatePayment() {
       }).then((res) => {
         if (res.data.code == "200") {
           toast.success("Data Inserted Sucessfully");
-          navigate("/invoice");
+          navigate("/p-receivedlist");
         } else {
           toast.error("Duplicate Entry");
         }
@@ -112,7 +111,7 @@ function CreatePayment() {
   return (
     <Layout>
       <Box bgcolor="#FFFFFF" p={2} borderRadius={2} mt={4}>
-        <PageTitle title="Create Payment" backLink="/master-service" />
+        <PageTitle title="Create Payment" backLink="/invoice" />
 
         <form id="dowRecp" autoComplete="off" onSubmit={onSubmit}>
           <Box
@@ -192,7 +191,7 @@ function CreatePayment() {
             <button
               className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
               onClick={() => {
-                navigate("/master-service");
+                navigate("/invoice");
               }}
             >
               Back
