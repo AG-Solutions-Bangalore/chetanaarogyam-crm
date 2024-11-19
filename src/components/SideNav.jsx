@@ -1,13 +1,15 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
-import {
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { MdOutlineFileDownload, MdSpaceDashboard } from "react-icons/md";
 import { GiWallet } from "react-icons/gi";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { useEffect, useRef } from "react";
-import { FaUsers } from "react-icons/fa";
+import { FaRegUser, FaUsers } from "react-icons/fa";
+import { TbInvoice } from "react-icons/tb";
 import logo from "../assets/logo.png";
+import { RiMoneyRupeeCircleFill } from "react-icons/ri";
+import { BsReceiptCutoff } from "react-icons/bs";
+
 const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavRef = useRef(null);
   const { pathname } = useLocation();
@@ -40,7 +42,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
   useEffect(() => {
     setOpenSideNav(false);
   }, [pathname, setOpenSideNav]);
-
+  const id = localStorage.getItem("user_type_id");
   return (
     <aside
       ref={sidenavRef}
@@ -89,73 +91,183 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
               )}
             </NavLink>
           </li>
+          {id === "2" && (
+            <>
+              <li>
+                <NavLink to="/master-service">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <FaRegUser className="w-5 h-5 text-inherit" />
 
-          <li>
-            <NavLink to="/direct-reffer">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <FaUsers className="w-5 h-5 text-inherit" />
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Master
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/enquire">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <FaUsers className="w-5 h-5 text-inherit" />
 
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Referral
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/wallet">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <GiWallet className="w-5 h-5 text-inherit" />
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Enquires
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/customer">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <BsReceiptCutoff className="w-5 h-5 text-inherit" />
 
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Wallet
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Customers
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/invoice">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <TbInvoice className="w-5 h-5 text-inherit" />
 
-          <li>
-            <NavLink to="/download">
-              {({ isActive }) => (
-                <Button
-                  variant={isActive ? "gradient" : "text"}
-                  color="white"
-                  className="flex items-center gap-4 px-4 capitalize"
-                  fullWidth
-                >
-                  <MdOutlineFileDownload className="w-5 h-5 text-inherit" />
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Invoice
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/p-receivedlist">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <RiMoneyRupeeCircleFill className="w-5 h-5 text-inherit" />
 
-                  <Typography
-                    color="inherit"
-                    className="font-medium capitalize"
-                  >
-                    Downloads
-                  </Typography>
-                </Button>
-              )}
-            </NavLink>
-          </li>
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Payment
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+            </>
+          )}
+          {id === "1" && (
+            <>
+              {" "}
+              <li>
+                <NavLink to="/direct-reffer">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <FaUsers className="w-5 h-5 text-inherit" />
 
-          {/* Add more hardcoded routes here as needed */}
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Referral
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/wallet">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <GiWallet className="w-5 h-5 text-inherit" />
+
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Wallet
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/download">
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color="white"
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <MdOutlineFileDownload className="w-5 h-5 text-inherit" />
+
+                      <Typography
+                        color="inherit"
+                        className="font-medium capitalize"
+                      >
+                        Downloads
+                      </Typography>
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </aside>

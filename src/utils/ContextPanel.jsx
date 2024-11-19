@@ -38,6 +38,30 @@ const AppProvider = ({ children }) => {
       if (token) {
         const allowedPath = [
           "/home",
+          //master
+          "/master-service",
+          "/master-referral",
+          "/master-service-create",
+          "/master-edit",
+          "/referral-edit/",
+          //enquire
+          "/enquire",
+          "/enquire-create",
+          "/customer-add",
+          //invoicce
+          "/invoice",
+          "/invoice-edit",
+          "invoice-view",
+          //payment
+          "/createpayment",
+          "/p-receivedlist",
+          "/received-edit",
+          //balancelist
+          "/p-balancelist",
+          //customer
+          "/customer",
+          "/customer-edit",
+          "/customer-invoice",
           //REFRAL
           "/direct-reffer",
           "/second-reffer",

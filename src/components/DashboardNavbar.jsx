@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import {
   Navbar,
@@ -13,20 +14,15 @@ import { UserCircleIcon, Bars3Icon } from "@heroicons/react/24/solid";
 import { FaShareAlt, FaWhatsapp } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { IoMdCopy } from "react-icons/io";
-
+import { HiArrowRightOnRectangle } from "react-icons/hi2";
 import Logout from "./Logout";
-import { useState } from "react";
-import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
 import { toast } from "react-toastify";
 
 const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
   const { pathname } = useLocation();
-
   const [openModal, setOpenModal] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const [shareMenuOpen, setShareMenuOpen] = useState(false); // Separate state for the share menu
-
-  const handleOpenLogout = () => setOpenModal(!openModal);
+  const [shareMenuOpen, setShareMenuOpen] = useState(false);
 
   const pathSegments = pathname.split("/").filter((el) => el !== "");
 
@@ -38,30 +34,18 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
     })),
   ];
 
-  const pageTitle =
-    pathSegments.length === 0
-      ? "Home"
-      : pathSegments[pathSegments.length - 1]?.charAt(0).toUpperCase() +
-        pathSegments[pathSegments.length - 1]?.slice(1);
-
-  // Hardcode fixedNavbar to true
-  const fixedNavbar = true;
-
-  // Referral message with the current user ID
   const referralMessage = `Hello, I'm a member of Chetana Aarogyam, and I'd like you to join as well. Please register yourself by clicking the link below. https://chetanaarogyam.com/index.html?id=${localStorage.getItem(
     "username"
   )}`;
 
-  const handleWhatsAppShare = (e) => {
-    e.preventDefault();
+  const handleWhatsAppShare = () => {
     const whatsappLink = `https://wa.me/?text=${encodeURIComponent(
       referralMessage
     )}`;
     window.open(whatsappLink, "_blank");
   };
 
-  const handleEmailShare = (e) => {
-    e.preventDefault();
+  const handleEmailShare = () => {
     const subject = "Join Chetana Aarogyam";
     const mailtoLink = `mailto:?subject=${encodeURIComponent(
       subject
@@ -69,77 +53,66 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
     window.location.href = mailtoLink;
   };
 
-  const handleCopyLink = (e) => {
-    e.preventDefault();
+  const handleCopyLink = () => {
     navigator.clipboard.writeText(referralMessage).then(() => {
-      // alert("Referral link copied to clipboard!");
       toast.info("Referral link copied to clipboard!");
     });
   };
 
+  const handleOpenLogout = () => setOpenModal(!openModal);
+
   return (
     <Navbar
-      color={fixedNavbar ? "white" : "transparent"}
-      className={`rounded-xl transition-all ${
-        fixedNavbar
-          ? "sticky top-4 z-40 py-3 bg-gradient-to-br from-gray-800 text-white to-gray-700 shadow-lg shadow-blue-900"
-          : "px-0 py-1"
-      }`}
+      color="white"
+      className="rounded-xl sticky top-4 z-40 py-3 bg-gradient-to-br from-gray-800 text-white to-gray-700 shadow-lg shadow-blue-900"
       fullWidth
-      blurred={fixedNavbar}
+      blurred
     >
-      <div className="flex justify-between gap-6 flex-row md:items-center">
+      <div className="flex flex-wrap justify-between gap-6 items-center">
+        {/* Breadcrumbs */}
         <div className="capitalize">
-          <Breadcrumbs
-            className={`bg-transparent p-0 transition-all ${
-              fixedNavbar ? "mt-1" : ""
-            }`}
-          >
+          <Breadcrumbs className="bg-transparent p-0">
             {breadcrumbs.map((breadcrumb, index) => (
               <Link key={index} to={breadcrumb.link}>
                 <Typography
                   variant="small"
                   color="white"
-                  className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
+                  className="font-normal opacity-50 hover:text-blue-500 hover:opacity-100"
                 >
                   {breadcrumb.name}
                 </Typography>
               </Link>
             ))}
           </Breadcrumbs>
-          <Typography variant="h6" color="white">
-            {pageTitle}
-          </Typography>
         </div>
-        <div className="flex items-center">
-          {/* Sidebar toggle button for mobile view */}
+
+        {/* Actions */}
+        <div className="flex flex-wrap items-center gap-4">
+          {/* Sidebar toggle button */}
           <IconButton
             variant="text"
             color="white"
-            className="grid xl:hidden"
+            className="xl:hidden"
+            aria-label="Toggle Sidebar"
             onClick={() => setOpenSideNav(!openSideNav)}
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-white" />
           </IconButton>
 
           {/* Share Menu */}
-          <Menu
-            open={shareMenuOpen}
-            handler={setShareMenuOpen}
-            placement="bottom-end"
-          >
+          <Menu open={shareMenuOpen} handler={setShareMenuOpen} placement="bottom-end">
             <MenuHandler>
-              <IconButton variant="text" color="orange">
-                <FaShareAlt className="h-5 w-5 text-red" />
+              <IconButton variant="text" color="orange" aria-label="Share Options">
+                <FaShareAlt className="h-5 w-5 text-white" />
               </IconButton>
             </MenuHandler>
             <MenuList className="bg-gray-700">
               <MenuItem onClick={handleWhatsAppShare} className="text-white">
-                <FaWhatsapp className=" h-5 w-5 inline-flex mr-2" />
+                <FaWhatsapp className="h-5 w-5 inline-flex mr-2" />
                 Whatsapp
               </MenuItem>
               <MenuItem onClick={handleEmailShare} className="text-white">
-                <MdEmail className="i h-5 w-5 inline-flex mr-2" />
+                <MdEmail className="h-5 w-5 inline-flex mr-2" />
                 Email
               </MenuItem>
               <MenuItem onClick={handleCopyLink} className="text-white">
@@ -150,14 +123,10 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
           </Menu>
 
           {/* Profile Menu */}
-          <Menu
-            open={profileMenuOpen}
-            handler={setProfileMenuOpen}
-            placement="bottom-end"
-          >
+          <Menu open={profileMenuOpen} handler={setProfileMenuOpen} placement="bottom-end">
             <MenuHandler>
-              <IconButton variant="text" color="orange">
-                <UserCircleIcon className="h-5 w-5 text-red" />
+              <IconButton variant="text" color="orange" aria-label="Profile Options">
+                <UserCircleIcon className="h-5 w-5 text-white" />
               </IconButton>
             </MenuHandler>
             <MenuList className="bg-gray-700">
@@ -169,9 +138,14 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
             </MenuList>
           </Menu>
 
-          {/* Settings icon */}
-          <IconButton variant="text" color="red" onClick={handleOpenLogout}>
-            <HiArrowRightStartOnRectangle className="h-5 w-5 text-red" />
+          {/* Logout */}
+          <IconButton
+            variant="text"
+            color="red"
+            aria-label="Logout"
+            onClick={handleOpenLogout}
+          >
+            <HiArrowRightOnRectangle className="h-5 w-5 text-white" />
           </IconButton>
         </div>
       </div>

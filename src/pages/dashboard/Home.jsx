@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import CountUp from "react-countup";
 
 const Home = () => {
-  const dateyear = ["2023-24"];
+  const dateyear = ["2024-25"];
 
   const [referral, setReferral] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
@@ -63,37 +63,42 @@ const Home = () => {
       return () => clearInterval(interval);
     }
   }, [products]);
-
+  const userid = localStorage.getItem("user_type_id");
   return (
     <Layout>
       <div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-5">
-          {/* <div className="bg-[#5e7081] text-white flex items-center justify-center flex-col text-center md:h-24 py-4 rounded-lg transition-transform duration-400">
-            <p className="text-md font-bold">Direct Referral</p>
-            <p className="text-xl font-bold">
-              <CountUp start={0} end={referral.inquiry_count} />
-            </p>
-          </div> */}
-
           <div>
-            <div className="bg-[#5e7081] text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[150px] flex flex-col items-center justify-center">
-              <h3 className="text-xl font-bold">Direct Referral</h3>
+            <div className="bg-[#5e7081] text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[120px] flex flex-col items-center justify-center">
+              {userid === "1" ? (
+                <h1 className="text-xl font-bold">Direct Referral</h1>
+              ) : (
+                <h1 className="text-xl font-bold">Total Enquire</h1>
+              )}
               <p className="text-5xl font-bold">
                 <CountUp start={0} end={referral.inquiry_count} />
               </p>
             </div>
           </div>
           <div>
-            <div className="bg-blue-500 text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[150px] flex flex-col items-center justify-center">
-              <h3 className="text-xl font-bold">Second Referral</h3>
+            <div className="bg-blue-500 text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[120px] flex flex-col items-center justify-center">
+              {userid === "1" ? (
+                <h1 className="text-xl font-bold">Second Referral</h1>
+              ) : (
+                <h1 className="text-xl font-bold">Total Customer</h1>
+              )}
               <p className="text-5xl font-bold">
                 <CountUp start={0} end={referral.customer_count} />
               </p>
             </div>
           </div>
           <div>
-            <div className="bg-green-500 text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[150px] flex flex-col items-center justify-center">
-              <h3 className="text-xl font-bold">Total Wallet</h3>
+            <div className="bg-green-500 text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[120px] flex flex-col items-center justify-center">
+              {userid === "1" ? (
+                <h3 className="text-xl font-bold">Total Wallet</h3>
+              ) : (
+                <h1 className="text-xl font-bold">Open Invoice</h1>
+              )}
               <p className="text-5xl font-bold">
                 <CountUp start={0} end={referral.invoice_open_count} />
               </p>
@@ -102,8 +107,9 @@ const Home = () => {
 
           {localStorage.getItem("user_type_id") == 2 && (
             <div>
-              <div className="bg-purple-500 text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[150px] flex flex-col items-center justify-center">
-                <h3 className="text-xl font-bold">Total Donors</h3>
+              <div className="bg-purple-500 text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[120px] flex flex-col items-center justify-center">
+                <h1 className="text-xl font-bold">Close Invoice</h1>
+
                 <p className="text-5xl font-bold">
                   <CountUp start={0} end={referral.invoice_close_count} />
                 </p>
@@ -117,7 +123,11 @@ const Home = () => {
             <div className="container mx-auto col-span-2">
               <div className="flex justify-between bg-white p-4 rounded-sm">
                 <div className="content-center">
-                  <h1>Direct Referral</h1>
+                  {userid === "2" ? (
+                    <h1>Latest Enquires</h1>
+                  ) : (
+                    <h1>Direct Referral</h1>
+                  )}
                 </div>
                 <div className="flex gap-3">
                   <div>
@@ -249,19 +259,19 @@ const Home = () => {
                                         {order.id}
                                       </td>
                                       <td className="whitespace-nowrap px-6 py-4">
+                                        {order.fullname}
+                                      </td>
+                                      <td className="whitespace-nowrap px-6 py-4">
+                                        {order.mobile_no}
+                                      </td>
+                                      <td className="whitespace-nowrap px-6 py-4">
                                         {order.area}
                                       </td>
                                       <td className="whitespace-nowrap px-6 py-4">
-                                        {order.full_name}
+                                        {order.interested_in}
                                       </td>
                                       <td className="whitespace-nowrap px-6 py-4">
-                                        {order.mobile}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.service}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.status}
+                                        {order.inquiry_status}
                                       </td>
                                     </tr>
                                   ))
