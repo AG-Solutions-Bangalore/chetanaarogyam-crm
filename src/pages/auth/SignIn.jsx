@@ -1,4 +1,4 @@
-import { Input,  Button, Typography } from "@material-tailwind/react";
+import { Input, Button, Typography } from "@material-tailwind/react";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -45,7 +45,8 @@ const SignIn = () => {
         localStorage.setItem("username", name);
         localStorage.setItem("user_type_id", user_type);
         localStorage.setItem("full_name", full_name);
-        if (token) {          localStorage.setItem("token", token);
+        if (token) {
+          localStorage.setItem("token", token);
           navigate("/home");
         } else {
           toast.error("Login Failed, Token not received.");
@@ -143,19 +144,29 @@ const SignIn = () => {
                   }}
                 />
               </div>
-              <Button
+              {/* <Button
                 type="sumbit"
                 disabled={loading}
                 className="mt-6"
                 fullWidth
               >
                 {loading ? "Checking..." : "Sign In"}
-              </Button>
+              </Button> */}
+              <div className="flex items-center justify-center">
+                <button
+                  className=" text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-green-700 p-2 rounded-lg shadow-md"
+                  type="sumbit"
+                  disabled={loading}
+                  fullWidth
+                >
+                  {loading ? "Checking..." : "Sign In"}
+                </button>
+              </div>
 
               <div className="flex items-center justify-center gap-2 mt-6">
                 <Typography
                   variant="small"
-                  className="font-medium text-gray-900"
+                  className="font-medium text-gray-900 hover:text-red-700"
                 >
                   <Link to="/forget-password">Forgot Password</Link>
                 </Typography>

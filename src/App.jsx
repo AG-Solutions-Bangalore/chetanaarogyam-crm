@@ -14,7 +14,6 @@ import Download from "./pages/download/download";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Service from "./pages/Master/Service";
-import Referal from "./components/Referal";
 import MasterReferral from "./pages/Master/Referal";
 import CreateService from "./pages/Master/CreateService";
 import EditService from "./pages/Master/EditServive";

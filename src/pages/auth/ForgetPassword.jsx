@@ -98,16 +98,22 @@ const ForgetPassword = () => {
                 }}
               />
             </div>
-            <Button type="submit" className="mt-6" fullWidth>
-              Reset Password
-            </Button>
 
+            <div className="flex items-center justify-center">
+              <button
+                className=" text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-green-700 p-2 rounded-lg shadow-md"
+                type="sumbit"
+                fullWidth
+              >
+                Reset Password
+              </button>
+            </div>
             <Typography
               variant="paragraph"
-              className="text-center text-blue-gray-500 font-medium mt-4"
+              className="text-center text-blue-gray-500 font-medium mt-4 "
             >
               Remembered your password?
-              <Link to="/" className="text-gray-900 ml-1">
+              <Link to="/" className="text-gray-900 ml-1 hover:text-red-700">
                 Sign In
               </Link>
             </Typography>

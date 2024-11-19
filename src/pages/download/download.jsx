@@ -63,13 +63,18 @@ const Download = () => {
         </h3>
       </div>
       <div className="text-lg bg-white mt-5 rounded-lg p-4  font-sans font-semibold flex flex-col md:flex-row  items-center gap-4">
-        <Button onClick={onSubmit} className="mr-2 bg-blue-500">
+        <button
+          className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-blue-400 p-2 rounded-lg shadow-md"
+          onClick={onSubmit}
+        >
           Download Direct Referral
-        </Button>
-        <Button onClick={onSubmita} className="mr-2 bg-blue-500">
-          {" "}
+        </button>
+        <button
+          className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-blue-400 p-2 rounded-lg shadow-md"
+          onClick={onSubmita}
+        >
           Download Second Referral
-        </Button>
+        </button>
       </div>
     </Layout>
   );
