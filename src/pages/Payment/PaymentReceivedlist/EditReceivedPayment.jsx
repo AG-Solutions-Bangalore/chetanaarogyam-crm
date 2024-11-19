@@ -100,8 +100,8 @@ function EditReceivedPayment() {
     if (v) {
       setIsButtonDisabled(true);
       axios({
-        url: `${BASE_URL}/api/panel-update-payment/${id}`,
-        method: "PUT",
+        url: `${BASE_URL}/api/panel-update-payment/${id}?_method=PUT`,
+        method: "POST",
         data,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -195,7 +195,7 @@ function EditReceivedPayment() {
               className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               type="submit"
             >
-              Submit
+              Update
             </button>
             <button
               className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"

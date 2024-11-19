@@ -85,6 +85,7 @@ function CreateEnquires() {
       }).then((res) => {
         if (res.data.code == "200") {
           toast.success("Data Inserted Sucessfully");
+          navigate("/enquire");
         } else {
           toast.error("Duplicate Entry");
         }
@@ -170,23 +171,6 @@ function CreateEnquires() {
               required
               size="small"
             />
-            {/* <FormControl fullWidth size="small">
-              <InputLabel>Service</InputLabel>
-              <Select
-                name="interested"
-                label="Service"
-                value={enquires.interested}
-                onChange={(e) => onInputChange(e)}
-                required
-                sx={{ marginTop: "6px" }}
-              >
-                {service.map((option) => (
-                  <MenuItem key={option.value} value={option.service_name}>
-                    {option.service_name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl> */}
 
             <FormControl fullWidth size="small">
               <InputLabel>Service</InputLabel>
@@ -219,7 +203,6 @@ function CreateEnquires() {
               value={enquires.remark}
               onChange={(e) => onInputChange(e)}
               fullWidth
-              required
               size="small"
             />
           </Box>

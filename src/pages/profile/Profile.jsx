@@ -76,7 +76,7 @@ const Profile = () => {
       } else {
         toast.success("Profile Updated Successfully!");
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/home");
         }, 2000);
       }
     } catch (error) {
@@ -115,7 +115,7 @@ const Profile = () => {
       setConfirmPassword("");
       setOpenDialog(false);
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/home");
       }, 2000);
     } catch (error) {
       console.error("Password change failed:", error);
@@ -242,7 +242,7 @@ const Profile = () => {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                  className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-blue-400 p-2 rounded-lg shadow-md"
                 >
                   Update Profile
                 </button>
@@ -291,13 +291,13 @@ const Profile = () => {
                 <div className="flex justify-between">
                   <button
                     onClick={() => setOpenDialog(false)}
-                    className="bg-red-600 text-white p-2 rounded hover:bg-red-700"
+                    className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={onChangePassword}
-                    className="bg-green-600 text-white p-2 rounded hover:bg-green-700"
+                    className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-green-600 hover:bg-green-900 p-2 rounded-lg shadow-md"
                   >
                     Change Password
                   </button>

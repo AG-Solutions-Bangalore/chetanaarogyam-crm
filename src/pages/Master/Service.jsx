@@ -13,7 +13,7 @@ const Service = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let isMounted = true; // Flag to check if component is still mounted
+    let isMounted = true; 
 
     const fetchServiceData = async () => {
       try {

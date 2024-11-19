@@ -185,14 +185,33 @@ const CreateInvoice = () => {
       invoice_amount: total,
     }));
   };
+  const [currentYear, setCurrentYear] = useState("");
 
+  useEffect(() => {
+    const fetchYearData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/panel-fetch-year`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        setCurrentYear(response.data.year.current_year);
+        console.log(response.data.year.current_year);
+      } catch (error) {
+        console.error("Error fetching year data:", error);
+      }
+    };
+
+    fetchYearData();
+  }, []);
   const onSubmit = (e) => {
     e.preventDefault();
 
     let data = {
       customer_id: userdata.id,
       invoice_date: todayback,
-      invoice_year: "2024-25",
+      invoice_year: currentYear,
       invoice_amount: donor.invoice_amount,
       invoice_discount: donor.invoice_discount,
       invoice_remarks: donor.invoice_remarks,
@@ -214,7 +233,7 @@ const CreateInvoice = () => {
       }).then((res) => {
         console.log("receipt", res.data);
         toast.success("Invoices Created Sucessfully");
-        navigate("/customer");
+        navigate("/invoice");
       });
     }
   };

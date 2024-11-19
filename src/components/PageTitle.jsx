@@ -15,11 +15,8 @@ function PageTitle({ title, icon: Icon, backLink }) {
   };
 
   return (
-    <div
-      className="flex items-center space-x-2 text-gray-900 text-xl cursor-pointer mt-4 mb-6"
-      onClick={handleBackClick}
-    >
-      <div className="cursor-pointer">
+    <div className="flex items-center space-x-2 text-gray-900 text-xl  mt-4 mb-6">
+      <div className="cursor-pointer" onClick={handleBackClick}>
         <FaArrowLeft />
       </div>
       <div className="font-bold text-gray-900 text-xl">{title}</div>
