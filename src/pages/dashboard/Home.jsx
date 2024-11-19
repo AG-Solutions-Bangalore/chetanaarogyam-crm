@@ -3,13 +3,15 @@ import Layout from "../../layout/Layout";
 import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
 import { HiMiniMinus } from "react-icons/hi2";
-import Loader from "@mui/material/CircularProgress";
+import { TfiReload } from "react-icons/tfi";
+import { MdCancel } from "react-icons/md";
+import Loader from "./Loader";
 import { useNavigate } from "react-router-dom";
 import CountUp from "react-countup";
-import { TbReload } from "react-icons/tb";
-import CloseIcon from "@mui/icons-material/Close";
 
 const Home = () => {
+  const dateyear = ["2024-25"];
+
   const [referral, setReferral] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
   const [products, setProducts] = useState(null);
@@ -19,7 +21,25 @@ const Home = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const navigate = useNavigate();
   const [currentYear, setCurrentYear] = useState("");
+  useEffect(() => {
+    const fetchYearData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/panel-fetch-year`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
+        setCurrentYear(response.data.year.current_year);
+        console.log(response.data.year.current_year);
+      } catch (error) {
+        console.error("Error fetching year data:", error);
+      }
+    };
+
+    fetchYearData();
+  }, []);
+  // Fetch both data sets but manage loading states separately
   const fetchDirectReferral = async () => {
     if (!currentYear) return;
     setLoadingRecentOrders(true);
@@ -42,24 +62,6 @@ const Home = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchYearData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/api/panel-fetch-year`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-
-        setCurrentYear(response.data.year.current_year);
-        console.log(response.data.year.current_year);
-      } catch (error) {
-        console.error("Error fetching year data:", error);
-      }
-    };
-
-    fetchYearData();
-  }, []);
   useEffect(() => {
     fetchDirectReferral();
   }, [currentYear]);
@@ -92,7 +94,7 @@ const Home = () => {
               ) : (
                 <h1 className="text-xl font-bold">Total Enquire</h1>
               )}
-              <p className="text-5xl font-bold">
+              <p className="text-4xl font-bold">
                 <CountUp start={0} end={referral.inquiry_count} />
               </p>
             </div>
@@ -104,7 +106,7 @@ const Home = () => {
               ) : (
                 <h1 className="text-xl font-bold">Total Customer</h1>
               )}
-              <p className="text-5xl font-bold">
+              <p className="text-4xl font-bold">
                 <CountUp start={0} end={referral.customer_count} />
               </p>
             </div>
@@ -116,7 +118,7 @@ const Home = () => {
               ) : (
                 <h1 className="text-xl font-bold">Open Invoice</h1>
               )}
-              <p className="text-5xl font-bold">
+              <p className="text-4xl font-bold">
                 <CountUp start={0} end={referral.invoice_open_count} />
               </p>
             </div>
@@ -127,7 +129,7 @@ const Home = () => {
               <div className="bg-purple-500 text-white p-4 shadow-[0_4px_10px_rgba(0,0,0,0.25)] rounded-md text-center min-h-[120px] flex flex-col items-center justify-center">
                 <h1 className="text-xl font-bold">Close Invoice</h1>
 
-                <p className="text-5xl font-bold">
+                <p className="text-4xl font-bold">
                   <CountUp start={0} end={referral.invoice_close_count} />
                 </p>
               </div>
@@ -149,19 +151,19 @@ const Home = () => {
                 <div className="flex gap-3">
                   <div>
                     <HiMiniMinus
-                      className="text-2xl mt-0.5 cursor-pointer"
+                      className="text-2xl cursor-pointer"
                       onClick={() => setShowTable(!showTable)}
                     />
                   </div>
                   <div>
-                    <TbReload
-                      className="text-xl mt-1 cursor-pointer"
+                    <TfiReload
+                      className="text-xl cursor-pointer"
                       onClick={handleReload}
                     />
                   </div>
                   <div>
-                    <CloseIcon
-                      className="text-2xl  cursor-pointer"
+                    <MdCancel
+                      className="text-2xl cursor-pointer"
                       onClick={() => setFullClose(false)}
                     />
                   </div>
@@ -312,9 +314,7 @@ const Home = () => {
                 )
               )} */}
               {loadingRecentOrders ? (
-                <div className="flex justify-center items-center ">
-                  <Loader />
-                </div>
+                <Loader />
               ) : (
                 showTable && (
                   <div className="flex flex-col">

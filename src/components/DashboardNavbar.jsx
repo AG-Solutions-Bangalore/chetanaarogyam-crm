@@ -11,6 +11,7 @@ import {
   MenuItem,
 } from "@material-tailwind/react";
 import { UserCircleIcon, Bars3Icon } from "@heroicons/react/24/solid";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { FaShareAlt, FaWhatsapp } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { IoMdCopy } from "react-icons/io";
@@ -28,9 +29,9 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
 
   const breadcrumbs = [
     { name: "Home", link: "/home" },
-    ...pathSegments.map((segment, index) => ({
+    ...pathSegments.slice(0, 1).map((segment, index) => ({
       name: segment.charAt(0).toUpperCase() + segment.slice(1),
-      link: `/${pathSegments.slice(0, index + 1).join("/")}`,
+      link: `/home/${segment}`,
     })),
   ];
 
@@ -96,37 +97,53 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
             aria-label="Toggle Sidebar"
             onClick={() => setOpenSideNav(!openSideNav)}
           >
-            <Bars3Icon strokeWidth={3} className="h-6 w-6 text-white" />
+            <HiOutlineMenuAlt3 strokeWidth={3} className="h-6 w-6 text-white" />
           </IconButton>
 
           {/* Share Menu */}
-          <Menu open={shareMenuOpen} handler={setShareMenuOpen} placement="bottom-end">
+          <Menu
+            open={shareMenuOpen}
+            handler={setShareMenuOpen}
+            placement="bottom-end"
+          >
             <MenuHandler>
-              <IconButton variant="text" color="orange" aria-label="Share Options">
-                <FaShareAlt className="h-5 w-5 text-white" />
+              <IconButton
+                variant="text"
+                color="orange"
+                aria-label="Share Options"
+              >
+                <FaShareAlt className="h-5 w-5 " />
               </IconButton>
             </MenuHandler>
             <MenuList className="bg-gray-700">
               <MenuItem onClick={handleWhatsAppShare} className="text-white">
-                <FaWhatsapp className="h-5 w-5 inline-flex mr-2" />
+                <FaWhatsapp className="h-5 w-5 inline-flex mr-2 text-green-500" />
                 Whatsapp
               </MenuItem>
               <MenuItem onClick={handleEmailShare} className="text-white">
-                <MdEmail className="h-5 w-5 inline-flex mr-2" />
+                <MdEmail className="h-5 w-5 inline-flex mr-2 text-red-300" />
                 Email
               </MenuItem>
               <MenuItem onClick={handleCopyLink} className="text-white">
-                <IoMdCopy className="h-5 w-5 inline-flex mr-2" />
+                <IoMdCopy className="h-5 w-5 inline-flex mr-2 text-black" />
                 Copy
               </MenuItem>
             </MenuList>
           </Menu>
 
           {/* Profile Menu */}
-          <Menu open={profileMenuOpen} handler={setProfileMenuOpen} placement="bottom-end">
+          <Menu
+            open={profileMenuOpen}
+            handler={setProfileMenuOpen}
+            placement="bottom-end"
+          >
             <MenuHandler>
-              <IconButton variant="text" color="orange" aria-label="Profile Options">
-                <UserCircleIcon className="h-5 w-5 text-white" />
+              <IconButton
+                variant="text"
+                color="orange"
+                aria-label="Profile Options"
+              >
+                <UserCircleIcon className="h-5 w-5 text-yellow-700" />
               </IconButton>
             </MenuHandler>
             <MenuList className="bg-gray-700">
@@ -145,7 +162,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
             aria-label="Logout"
             onClick={handleOpenLogout}
           >
-            <HiArrowRightOnRectangle className="h-5 w-5 text-white" />
+            <HiArrowRightOnRectangle className="h-5 w-5 text-red-600" />
           </IconButton>
         </div>
       </div>
