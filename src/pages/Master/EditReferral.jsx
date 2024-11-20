@@ -178,8 +178,7 @@ function EditReferral() {
               size="small"
               sx={{
                 gridColumn: {
-                  // xs: "1 / -1",
-                  // sm: "1 / -1",
+                
                   md: "1 / 3",
                 },
               }}

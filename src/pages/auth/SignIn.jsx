@@ -144,14 +144,7 @@ const SignIn = () => {
                   }}
                 />
               </div>
-              {/* <Button
-                type="sumbit"
-                disabled={loading}
-                className="mt-6"
-                fullWidth
-              >
-                {loading ? "Checking..." : "Sign In"}
-              </Button> */}
+
               <div className="flex items-center justify-center">
                 <button
                   className=" text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-green-700 p-2 rounded-lg shadow-md"

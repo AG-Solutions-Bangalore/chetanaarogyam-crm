@@ -58,15 +58,7 @@ const InvoicesList = () => {
         },
       },
     },
-    // {
-    //   name: "invoice_date",
-    //   label: "Date",
-    //   options: { filter: true, sort: false },
-    //   customBodyRender: (value) => {
-    //     if (!value) return "";
-    //     return moment(value).format("DD/MM/YYYY");
-    //   },
-    // },
+
     {
       name: "invoice_date",
       label: "Date",
