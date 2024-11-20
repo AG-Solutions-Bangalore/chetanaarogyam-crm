@@ -48,9 +48,28 @@ function CreateEnquires() {
       });
     }
   };
+  const [currentYear, setCurrentYear] = useState("");
+  useEffect(() => {
+    const fetchYearData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/panel-fetch-year`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
+        setCurrentYear(response.data.year.current_year);
+        console.log(response.data.year.current_year);
+      } catch (error) {
+        console.error("Error fetching year data:", error);
+      }
+    };
+
+    fetchYearData();
+  }, []);
   const onSubmit = (e) => {
     const data = new FormData();
+    data.append("inquiry_year", currentYear);
     data.append("name", enquires.name);
     data.append("phone", enquires.phone);
     data.append("email", enquires.email);
@@ -119,7 +138,6 @@ function CreateEnquires() {
               xs: "1fr",
               sm: "1fr 1fr",
               md: "1fr 1fr 1fr",
-              lg: "1fr 1fr 1fr 1fr",
             }}
             gap={2}
             mt={2}
@@ -153,6 +171,16 @@ function CreateEnquires() {
               required
               size="small"
             />
+          </Box>
+
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              xs: "1fr",
+            }}
+            gap={2}
+            mt={2}
+          >
             <TextField
               label="Address"
               name="address"
@@ -162,6 +190,17 @@ function CreateEnquires() {
               required
               size="small"
             />
+          </Box>
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              xs: "1fr",
+              sm: "1fr 1fr",
+              md: "1fr 1fr 1fr",
+            }}
+            gap={2}
+            mt={2}
+          >
             <TextField
               label="Area"
               name="area"
@@ -173,7 +212,7 @@ function CreateEnquires() {
             />
 
             <FormControl fullWidth size="small">
-              <InputLabel>Service</InputLabel>
+              <InputLabel>Service *</InputLabel>
               <Select
                 label="Service"
                 name="interested"
@@ -194,9 +233,17 @@ function CreateEnquires() {
               value={enquires.referred_by_code}
               onChange={(e) => onInputChange(e)}
               fullWidth
-              required
               size="small"
             />
+          </Box>
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              xs: "1fr",
+            }}
+            gap={2}
+            mt={2}
+          >
             <TextField
               label="Remark"
               name="remark"
@@ -206,16 +253,15 @@ function CreateEnquires() {
               size="small"
             />
           </Box>
-
-          <Box display="flex" gap={2} mt={3}>
+          <Box display="flex" gap={2} mt={3} sx={{ justifyContent: "center" }}>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               type="submit"
             >
               Submit
             </button>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
               onClick={() => {
                 navigate("/enquire");
               }}

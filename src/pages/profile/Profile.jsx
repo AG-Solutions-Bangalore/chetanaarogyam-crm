@@ -59,14 +59,18 @@ const Profile = () => {
       return;
     }
 
-    const data = { full_name: firstName, phone };
+    const data = { full_name: firstName, phone, email, address, pincode };
 
     try {
-      const res = await axios.post(`${BASE_URL}/api/update-profile`, data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.post(
+        `${BASE_URL}/api/panel-update-profile`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       if (res.data.code === 401) {
         toast.error("Duplicate Entry of Name");
       } else if (res.data.code === 402) {
@@ -76,7 +80,7 @@ const Profile = () => {
       } else {
         toast.success("Profile Updated Successfully!");
         setTimeout(() => {
-          navigate("/home");
+          // navigate("/home");
         }, 2000);
       }
     } catch (error) {
@@ -99,7 +103,7 @@ const Profile = () => {
     const data = {
       old_password: oldPassword,
       password: newPassword,
-      confirm_password: confirmPassword,
+      // confirm_password: confirmPassword,
       username: localStorage.getItem("username"),
     };
 
@@ -114,9 +118,9 @@ const Profile = () => {
       setNewPassword("");
       setConfirmPassword("");
       setOpenDialog(false);
-      setTimeout(() => {
-        navigate("/home");
-      }, 2000);
+      // setTimeout(() => {
+      //   navigate("/home");
+      // }, 2000);
     } catch (error) {
       console.error("Password change failed:", error);
       toast.error("Please enter valid old password");
@@ -166,10 +170,9 @@ const Profile = () => {
                   <label className="block text-sm font-medium">Full Name</label>
                   <input
                     type="text"
-                    className="mt-1 p-2 border border-gray-300 rounded w-full"
+                    className="mt-1 p-2 border border-gray-300 rounded w-full "
                     required
                     value={firstName}
-                    disabled
                     onChange={(e) => {
                       if (validateOnlyText(e.target.value)) {
                         setFirstName(e.target.value);
@@ -182,10 +185,11 @@ const Profile = () => {
                   <label className="block text-sm font-medium">Phone</label>
                   <input
                     type="text"
-                    className="mt-1 p-2 border border-gray-300 rounded w-full"
+                    className="mt-1 p-2 border border-gray-300 rounded w-full cursor-not-allowed"
                     required
                     maxLength={10}
                     value={phone}
+                    disabled
                     onChange={(e) => {
                       if (validateOnlyDigits(e.target.value)) {
                         setPhone(e.target.value);
@@ -198,7 +202,8 @@ const Profile = () => {
                   <label className="block text-sm font-medium">Email</label>
                   <input
                     type="email"
-                    className="mt-1 p-2 border border-gray-300 rounded w-full"
+                    disabled
+                    className="mt-1 p-2 border border-gray-300 rounded w-full cursor-not-allowed"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -210,8 +215,9 @@ const Profile = () => {
                   </label>
                   <input
                     type="text"
-                    className="mt-1 p-2 border border-gray-300 rounded w-full"
+                    className="mt-1 p-2 border border-gray-300 rounded w-full cursor-not-allowed"
                     required
+                    disabled
                     value={referralcode}
                     onChange={(e) => setReferralCode(e.target.value)}
                   />
@@ -223,8 +229,7 @@ const Profile = () => {
                 <label className="block text-sm font-medium">Address</label>
                 <input
                   type="text"
-                  className="mt-1 p-2 border border-gray-300 rounded w-full"
-                  required
+                  className="mt-1 p-2 border border-gray-300 rounded w-full "
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
@@ -234,7 +239,6 @@ const Profile = () => {
                 <input
                   type="text"
                   className="mt-1 p-2 border border-gray-300 rounded w-full"
-                  required
                   value={pincode}
                   maxLength={6}
                   onChange={(e) => {

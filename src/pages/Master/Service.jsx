@@ -13,7 +13,7 @@ const Service = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let isMounted = true; 
+    let isMounted = true;
 
     const fetchServiceData = async () => {
       try {
@@ -132,7 +132,7 @@ const Service = () => {
               Service List
             </h3>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               onClick={handleservice}
             >
               + Add Service{" "}

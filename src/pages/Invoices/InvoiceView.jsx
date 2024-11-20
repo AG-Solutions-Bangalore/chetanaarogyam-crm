@@ -11,6 +11,7 @@ import { IoMdPrint } from "react-icons/io";
 import PageTitle from "../../components/PageTitle";
 import ReactToPrint from "react-to-print";
 import { useRef } from "react";
+import { grey } from "@mui/material/colors";
 
 import {
   Table,
@@ -81,7 +82,7 @@ function InvoiceView() {
         const imgWidth = canvas.width;
         const imgHeight = canvas.height;
 
-        const margin = 20;
+        const margin = 10;
 
         const availableWidth = pdfWidth - 2 * margin;
 
@@ -123,15 +124,12 @@ function InvoiceView() {
   return (
     <Layout>
       <div className="mt-3">
-     
-        <div className="flex flex-col md:flex-row justify-between items-center p-3 space-y-4 md:space-y-0">
-          {/* Page Title on the left */}
+        {/* <div className="flex md:flex-row justify-between items-center p-3 space-y-4 md:space-y-0">
           <div className="w-full md:w-auto">
             <PageTitle title={"Invoice View"} backLink={"/invoice"}></PageTitle>
           </div>
 
-          {/* Buttons and Email Handling on the right */}
-          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
+          <div className="flex  md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
             <button
               variant="text"
               className="flex items-center space-x-2"
@@ -142,7 +140,55 @@ function InvoiceView() {
               }}
             >
               <LuDownload className="text-lg" />
-              <span>Download</span>
+              <span className="hidden sm:inline">Download</span>{" "}
+            </button>
+
+            <div className="flex flex-col items-center text-center">
+              <a
+                onClick={(e) => sendEmail(e)}
+                className="flex items-center space-x-1 cursor-pointer"
+              >
+                <MdOutlineEmail size={20} />
+                <span className="hidden sm:inline">Email</span>
+              </a>
+              <small style={{ fontSize: "10px" }} className="hidden sm:inline">
+                Email Sent {invoices.invoice_email_count || 0} Times
+              </small>
+            </div>
+
+            <ReactToPrint
+              trigger={() => (
+                <button variant="text" className="flex items-center space-x-2">
+                  <IoMdPrint />
+                  <span className="hidden sm:inline">Print Receipt</span>
+                </button>
+              )}
+              content={() => componentRef.current}
+            />
+          </div>
+        </div> */}
+
+        <div className="flex  md:flex-row justify-between items-center p-3 space-y-4 md:space-y-0">
+          {/* Page Title on the left */}
+          <div className="w-full md:w-auto">
+            <PageTitle title={"Invoice View"} backLink={"/invoice"} />
+          </div>
+
+          {/* Buttons and Email Handling on the right */}
+          <div className="flex sm:justify-between md:flex-row items-center space-x-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
+            {/* Download Button */}
+            <button
+              variant="text"
+              className="flex items-center space-x-2"
+              onClick={handleSavePDF}
+              style={{
+                display:
+                  localStorage.getItem("user_type_id") == 4 ? "none" : "",
+              }}
+            >
+              <LuDownload className="text-lg" />
+              <span className="hidden sm:inline">Download</span>{" "}
+              {/* Show text only on sm and larger */}
             </button>
 
             {/* Email Handling Section */}
@@ -152,18 +198,19 @@ function InvoiceView() {
                 className="flex items-center space-x-1 cursor-pointer"
               >
                 <MdOutlineEmail size={20} />
-                <span>Email</span>
+                <span className="hidden sm:inline">Email</span>
               </a>
-              <small style={{ fontSize: "10px" }}>
+              <small style={{ fontSize: "10px" }} className="hidden sm:inline">
                 Email Sent {invoices.invoice_email_count || 0} Times
               </small>
             </div>
 
+            {/* Print Button */}
             <ReactToPrint
               trigger={() => (
                 <button variant="text" className="flex items-center space-x-2">
                   <IoMdPrint />
-                  <span>Print Receipt</span>
+                  <span className="hidden sm:inline">Print Receipt</span>
                 </button>
               )}
               content={() => componentRef.current}
@@ -193,7 +240,7 @@ function InvoiceView() {
 
           <div className="w-full max-w-4xl  p-4 ">
             {/* Client Details */}
-            <div className="flex flex-col   items-center md:flex-row md:justify-between mb-4">
+            <div className="flex flex-col  md:flex-row md:justify-between mb-4">
               <div>
                 <p className="font-medium">
                   Name: <span className="font-normal">{customer.fullname}</span>
@@ -209,8 +256,8 @@ function InvoiceView() {
                   <span className="font-normal"> {customer.mobile_no}</span>
                 </p>
                 <p className="font-medium">
-                  {/* Contact Number:{" "}
-                  <span className="font-normal"> {customer.mobile_no}</span> */}
+                  INV Ref:{" "}
+                  <span className="font-normal"> {invoices.invoice_ref}</span>
                 </p>
               </div>
             </div>
@@ -221,34 +268,72 @@ function InvoiceView() {
               className="shadow-none"
             >
               <Table className="table-auto border-collapse border border-gray-300">
+                {/* <TableHead className="bg-gray-100">
+                  <TableRow className="py-5 px-40">
+                    <TableCell className="text-center font-bold border border-gray-300 ">
+                      Servives ddfdfdd
+                    </TableCell>
+                    <TableCell className="text-center flex items-center justify-center font-bold border border-gray-300">
+                      Total
+                    </TableCell>
+                  </TableRow>
+                </TableHead> */}
                 <TableHead className="bg-gray-100">
                   <TableRow>
-                    <TableCell className="text-center font-bold border border-gray-300">
-                      Servives
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        border: "1px solid #D1D5DB",
+                        paddingY: "0px",
+                        paddingX: "20px",
+                        // padding: "5px 0px 5px 20px",
+                        height: "35px",
+                      }}
+                    >
+                      Services
                     </TableCell>
-                    {/* <TableCell className="text-center font-bold border border-gray-300">
-                      Amount
-                    </TableCell> */}
-                    {/* <TableCell className="text-center font-bold border border-gray-300">
-                      Price
-                    </TableCell> */}
-                    <TableCell className="text-center font-bold border border-gray-300">
+                    <TableCell
+                      sx={{
+                        textAlign: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: "bold",
+                        height: "35px",
+                        borderBottom: "1px solid #D1D5DB",
+                      }}
+                    >
                       Total
                     </TableCell>
                   </TableRow>
                 </TableHead>
+
                 <TableBody>
                   {invoicesSub.map((treatment, index) => (
                     <TableRow key={index}>
-                      <TableCell className="border border-gray-300">
+                      <TableCell
+                        sx={{
+                          // textAlign: "center",
+                          // fontWeight: "bold",
+                          borderRight: "1px solid #D1D5DB",
+                          padding: "10px 20px 10px 5px",
+
+                          height: "35px",
+                        }}
+                      >
                         {treatment.invoice_sub_service}
                       </TableCell>
-                      {/* <TableCell className="text-center border border-gray-300">
-                        {" "}
-                        {treatment.invoice_sub_amount}{" "}
-                      </TableCell> */}
-                      {/* <TableCell className="text-center border border-gray-300"></TableCell> */}
-                      <TableCell className="text-center border border-gray-300">
+
+                      <TableCell
+                        sx={{
+                          textAlign: "end",
+                          fontWeight: "bold",
+                          // border: "1px solid #D1D5DB",
+                          padding: "10px 20px 10px 0px",
+                          height: "35px",
+                        }}
+                      >
                         {" "}
                         {treatment.invoice_sub_amount}{" "}
                       </TableCell>
@@ -260,21 +345,39 @@ function InvoiceView() {
                     {/* <TableCell colSpan={1} className="border border-gray-300" /> */}
 
                     <TableCell
-                      className="border-t  font-bold bg-gray-100"
+                      // className=" font-bold bg-gray-100 "
+                      // sx={{
+                      //   textAlign: "right",
+                      //   fontWeight: 700,
+                      //   fontSize: "15px",
+                      //   color: "black",
+                      // }}
                       sx={{
-                        textAlign: "right",
                         fontWeight: 700,
                         fontSize: "15px",
                         color: "black",
+                        textAlign: "end",
+                        fontWeight: "bold",
+                        borderRight: "1px solid #D1D5DB",
+                        padding: "10px 20px 10px 0px",
+                        height: "35px",
+                        backgroundColor: grey[100],
                       }}
                     >
                       Total
                     </TableCell>
                     <TableCell
-                      className="border-t  font-bold text-center "
+                      // className="border-t  font-bold text-center "
                       sx={{
                         fontWeight: 700,
                         fontSize: "15px",
+                        color: "black",
+                        textAlign: "end",
+                        fontWeight: "bold",
+                        // border: "1px solid #D1D5DB",
+                        padding: "10px 20px 10px 0px",
+                        height: "35px",
+                        backgroundColor: grey[100],
                       }}
                     >
                       {invoices.invoice_amount}
@@ -284,21 +387,33 @@ function InvoiceView() {
                     {/* <TableCell colSpan={1} className="border border-gray-100" /> */}
 
                     <TableCell
-                      className="border-t text-lg font-bold bg-gray-100"
+                      // className="border-t text-lg font-bold bg-gray-100"
                       sx={{
-                        textAlign: "right",
                         fontWeight: 700,
                         fontSize: "15px",
                         color: "black",
+                        textAlign: "end",
+                        fontWeight: "bold",
+                        borderRight: "1px solid #D1D5DB",
+                        padding: "10px 20px 10px 0px",
+                        height: "35px",
+                        backgroundColor: grey[100],
                       }}
                     >
                       Discount
                     </TableCell>
                     <TableCell
-                      className="border-t font-bold text-center "
+                      // className="border-t font-bold text-center "
                       sx={{
                         fontWeight: 700,
                         fontSize: "15px",
+                        color: "black",
+                        textAlign: "end",
+                        fontWeight: "bold",
+                        // border: "1px solid #D1D5DB",
+                        padding: "10px 20px 10px 0px",
+                        height: "35px",
+                        backgroundColor: grey[100],
                       }}
                     >
                       {invoices.invoice_discount}
@@ -308,21 +423,32 @@ function InvoiceView() {
                     {/* <TableCell colSpan={1} className="border border-gray-100" /> */}
 
                     <TableCell
-                      className="border-t font-bold text-right bg-gray-100"
+                      // className="border-t font-bold text-right bg-gray-100"
                       sx={{
-                        textAlign: "right",
                         fontWeight: 700,
                         fontSize: "15px",
                         color: "black",
+                        textAlign: "end",
+                        fontWeight: "bold",
+                        borderRight: "1px solid #D1D5DB",
+                        padding: "10px 20px 10px 0px",
+                        height: "35px",
+                        backgroundColor: grey[100],
                       }}
                     >
                       Grand Total
                     </TableCell>
                     <TableCell
-                      className="border-t font-bold text-center "
                       sx={{
                         fontWeight: 700,
                         fontSize: "15px",
+                        color: "black",
+                        textAlign: "end",
+                        fontWeight: "bold",
+                        // border: "1px solid #D1D5DB",
+                        padding: "10px 20px 10px 0px",
+                        height: "35px",
+                        backgroundColor: grey[100],
                       }}
                     >
                       {invoices.invoice_amount - invoices.invoice_discount}
@@ -331,22 +457,6 @@ function InvoiceView() {
                 </TableFooter>
               </Table>
             </TableContainer>
-
-            {/* Totals Section */}
-            {/* <div className="mt-4">
-              <div className="flex justify-between border-t pt-2">
-                <span className="font-bold">Total</span>
-                <span className="font-bold">---</span>
-              </div>
-              <div className="flex justify-between border-t pt-2">
-                <span className="font-bold">Discount</span>
-                <span className="font-bold">---</span>
-              </div>
-              <div className="flex justify-between border-t pt-2">
-                <span className="font-bold">Grand Total</span>
-                <span className="font-bold">---</span>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

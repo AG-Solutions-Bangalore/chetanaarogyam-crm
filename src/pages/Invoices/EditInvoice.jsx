@@ -225,7 +225,7 @@ const EditInvoice = () => {
   };
   const FetchCustomers = () => {
     axios({
-      url: BASE_URL + "/api/panel-fetch-customers-by-value/CAY-2024-25-1",
+      url: `${BASE_URL}/api/panel-fetch-customers-by-value/${donor.customers_ref}`,
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -255,7 +255,7 @@ const EditInvoice = () => {
     FetchCustomers();
     FetchServices();
     fetchYearData();
-  }, []);
+  }, [donor.customers_ref]);
   const [currentYear, setCurrentYear] = useState("");
   const fetchYearData = async () => {
     try {
@@ -427,13 +427,13 @@ const EditInvoice = () => {
 
           <div className="flex justify-center  mt-4">
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               type="submit"
             >
               Update{" "}
             </button>{" "}
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md mx-2"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-red-600 hover:bg-red-400 p-2 rounded-lg shadow-md mx-2"
               onClick={() => {
                 navigate("/invoice");
               }}
