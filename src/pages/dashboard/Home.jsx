@@ -228,7 +228,7 @@ const Home = () => {
                                 referral.inquiry_latest.map((order, key) => (
                                   <tr
                                     key={key}
-                                    className="border-b border-neutral-200 bg-white"
+                                    className="border-b border-neutral-200 bg-white hover:bg-gray-100 hover:text-black"
                                   >
                                     <td className="whitespace-nowrap px-6 py-4 font-medium text-left">
                                       {order.id}
