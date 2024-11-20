@@ -140,7 +140,7 @@ const Home = () => {
         <div className="mt-10">
           {fullClose && (
             <div className="container mx-auto col-span-2">
-              <div className="flex justify-between bg-white p-4 rounded-sm">
+              <div className="flex justify-between bg-white p-4 rounded-t-lg">
                 <div className="content-center">
                   {userid === "2" ? (
                     <h1>Latest Enquires</h1>
@@ -169,150 +169,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-              {/* {loadingRecentOrders ? (
-                <Loader />
-              ) : (
-                showTable && (
-                  <div className="flex flex-col">
-                    <div className="overflow-x-auto">
-                      <div className="inline-block min-w-full">
-                        <div className="overflow-hidden">
-                          <table className="min-w-full text-center text-sm font-light text-surface dark:text-white">
-                            {localStorage.getItem("user_type_id") == 2 && (
-                              <thead className="bg-gray-400 font-medium text-white dark:border-white/10">
-                                <tr>
-                                  <th scope="col" className="px-6 py-4">
-                                    ID
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Full Name
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Mobile
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Area
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Service
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Status
-                                  </th>
-                                </tr>
-                              </thead>
-                            )}
-                            {localStorage.getItem("user_type_id") == 1 && (
-                              <thead className="bg-gray-400 font-medium text-white dark:border-white/10">
-                                <tr>
-                                  <th scope="col" className="px-6 py-4">
-                                    ID
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Full Name
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Mobile
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    Email
-                                  </th>
-                                  <th scope="col" className="px-6 py-4 ">
-                                    Referral Id
-                                  </th>
-                                  <th scope="col" className="px-6 py-4">
-                                    No of Referral
-                                  </th>
-                                </tr>
-                              </thead>
-                            )}
-                            {localStorage.getItem("user_type_id") == 1 && (
-                              <tbody>
-                                {referral?.inquiry_latest?.length > 0 ? (
-                                  referral.inquiry_latest.map((order, key) => (
-                                    <tr
-                                      key={key}
-                                      className="border-b border-neutral-200 bg-white"
-                                    >
-                                      <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                        {order.id}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                        {order.full_name}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                        {order.mobile}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                        {order.email}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.name}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.purch}
-                                      </td>
-                                    </tr>
-                                  ))
-                                ) : (
-                                  <tr>
-                                    <td
-                                      colSpan={6}
-                                      className="px-6 py-4 text-center text-2xl font-bold text-blue-grey-600"
-                                    >
-                                      No data available
-                                    </td>
-                                  </tr>
-                                )}
-                              </tbody>
-                            )}
-                            {localStorage.getItem("user_type_id") == 2 && (
-                              <tbody>
-                                {referral?.inquiry_latest?.length > 0 ? (
-                                  referral.inquiry_latest.map((order, key) => (
-                                    <tr
-                                      key={key}
-                                      className="border-b border-neutral-200 bg-white"
-                                    >
-                                      <td className="whitespace-nowrap px-6 py-4 font-medium">
-                                        {order.id}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.fullname}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.mobile_no}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.area}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.interested_in}
-                                      </td>
-                                      <td className="whitespace-nowrap px-6 py-4">
-                                        {order.inquiry_status}
-                                      </td>
-                                    </tr>
-                                  ))
-                                ) : (
-                                  <tr>
-                                    <td
-                                      colSpan={6}
-                                      className="px-6 py-4 text-center text-2xl font-bold text-blue-grey-600"
-                                    >
-                                      No data available
-                                    </td>
-                                  </tr>
-                                )}
-                              </tbody>
-                            )}
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )
-              )} */}
+
               {loadingRecentOrders ? (
                 <Loader />
               ) : (
@@ -323,7 +180,7 @@ const Home = () => {
                         <div className="overflow-hidden">
                           <table className="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             {/* Render Table Header */}
-                            <thead className="bg-gray-400 font-medium text-white dark:border-white/10">
+                            <thead className="bg-gray-100 font-medium text-black dark:border-white/10">
                               <tr>
                                 <th
                                   scope="col"
@@ -371,7 +228,7 @@ const Home = () => {
                                 referral.inquiry_latest.map((order, key) => (
                                   <tr
                                     key={key}
-                                    className="border-b border-neutral-200 bg-white"
+                                    className="border-b border-neutral-200 bg-white hover:bg-gray-100 hover:text-black"
                                   >
                                     <td className="whitespace-nowrap px-6 py-4 font-medium text-left">
                                       {order.id}

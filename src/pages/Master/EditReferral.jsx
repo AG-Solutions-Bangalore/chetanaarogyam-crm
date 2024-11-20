@@ -171,10 +171,10 @@ function EditReferral() {
               <InputLabel>Status</InputLabel>
               <Select
                 name="status"
+                label="Status"
                 value={team.status}
                 onChange={onInputChange}
                 required
-                sx={{ marginTop: "6px" }}
               >
                 {statusOptions.map((option) => (
                   <MenuItem key={option.value} value={option.value}>

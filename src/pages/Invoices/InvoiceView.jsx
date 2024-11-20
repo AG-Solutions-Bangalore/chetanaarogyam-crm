@@ -123,56 +123,54 @@ function InvoiceView() {
   return (
     <Layout>
       <div className="mt-3">
-        <PageTitle title={"Invoice View "} backLink={"/invoice"}></PageTitle>
-        <div className="flex flex-col md:flex-row justify-center md:justify-end items-center space-y-4 md:space-y-0 md:space-x-4 p-3">
-          <button
-            variant="text"
-            className="flex items-center space-x-2"
-            onClick={handleSavePDF}
-            style={{
-              display: localStorage.getItem("user_type_id") == 4 ? "none" : "",
-            }}
-          >
-            <LuDownload className="text-lg" />
-            <span>Download</span>
-          </button>
+     
+        <div className="flex flex-col md:flex-row justify-between items-center p-3 space-y-4 md:space-y-0">
+          {/* Page Title on the left */}
+          <div className="w-full md:w-auto">
+            <PageTitle title={"Invoice View"} backLink={"/invoice"}></PageTitle>
+          </div>
 
-          {/* Email Handling Section */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-            }}
-          >
-            <a
-              onClick={(e) => sendEmail(e)}
+          {/* Buttons and Email Handling on the right */}
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
+            <button
+              variant="text"
+              className="flex items-center space-x-2"
+              onClick={handleSavePDF}
               style={{
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
+                display:
+                  localStorage.getItem("user_type_id") == 4 ? "none" : "",
               }}
             >
-              <MdOutlineEmail size={20} />
-              <span>Email</span>
-            </a>
-            <small style={{ fontSize: "10px" }}>
-              Email Sent {invoices.invoice_email_count || 0} Times
-            </small>
+              <LuDownload className="text-lg" />
+              <span>Download</span>
+            </button>
+
+            {/* Email Handling Section */}
+            <div className="flex flex-col items-center text-center">
+              <a
+                onClick={(e) => sendEmail(e)}
+                className="flex items-center space-x-1 cursor-pointer"
+              >
+                <MdOutlineEmail size={20} />
+                <span>Email</span>
+              </a>
+              <small style={{ fontSize: "10px" }}>
+                Email Sent {invoices.invoice_email_count || 0} Times
+              </small>
+            </div>
+
+            <ReactToPrint
+              trigger={() => (
+                <button variant="text" className="flex items-center space-x-2">
+                  <IoMdPrint />
+                  <span>Print Receipt</span>
+                </button>
+              )}
+              content={() => componentRef.current}
+            />
           </div>
-          <ReactToPrint
-            trigger={() => (
-              <button variant="text" className="flex items-center space-x-2">
-                <IoMdPrint />
-                <span>Print Receipt</span>
-              </button>
-            )}
-            content={() => componentRef.current}
-          />
         </div>
+
         <hr></hr>
 
         <div

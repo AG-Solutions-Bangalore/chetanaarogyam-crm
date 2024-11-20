@@ -232,11 +232,16 @@ const Profile = () => {
               <div className="mb-4">
                 <label className="block text-sm font-medium">Pincode</label>
                 <input
-                  type="number"
+                  type="text"
                   className="mt-1 p-2 border border-gray-300 rounded w-full"
                   required
                   value={pincode}
-                  onChange={(e) => setPincode(e.target.value)}
+                  maxLength={6}
+                  onChange={(e) => {
+                    if (validateOnlyDigits(e.target.value)) {
+                      setPincode(e.target.value);
+                    }
+                  }}
                 />
               </div>
               <div className="flex justify-center">

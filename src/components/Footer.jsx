@@ -27,7 +27,7 @@ export function Footer() {
     fetchYearData();
   }, []);
   return (
-    <footer className="bg-gray-800 text-white p-4 text-center rounded-lg  xl:ml-80 mb-3">
+    <footer className="bg-gray-800 text-white p-4 text-center rounded-lg  xl:ml-80 mb-3 mx-3 shadow-lg shadow-blue-900">
       <div className="flex w-full flex-wrap items-center justify-center gap-6 px-2">
         <Typography variant="small" className="font-normal text-inherit">
           Copyright@ {currentYear} by
