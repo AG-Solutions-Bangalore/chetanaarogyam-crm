@@ -180,7 +180,7 @@ const Home = () => {
                         <div className="overflow-hidden">
                           <table className="min-w-full text-left text-sm font-light text-surface dark:text-white">
                             {/* Render Table Header */}
-                            <thead className="bg-gray-400 font-medium text-white dark:border-white/10">
+                            <thead className="bg-gray-100 font-medium text-black dark:border-white/10">
                               <tr>
                                 <th
                                   scope="col"
