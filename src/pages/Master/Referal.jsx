@@ -138,9 +138,7 @@ const MasterReferral = () => {
             <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
               Referral List
             </h3>
-            {/* <button className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md">
-              + Add Referral{" "}
-            </button>{" "} */}
+          
           </div>
           <div className="mt-5">
             <MUIDataTable

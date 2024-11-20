@@ -276,28 +276,7 @@ const EditInvoice = () => {
     <Layout>
       <PageTitle title={"Edit Invoice"} backLink={"/invoice"}></PageTitle>
       <Card className="p-6 mt-4">
-        {/* <h3 className="text-center md:text-left text-lg md:text-xl font-bold mb-4">
-          Invoice
-        </h3> */}
-        {/* <div className="grid grid-cols-1 items-center text-center md:text-left md:grid-cols-3 lg:grid-cols-5 gap-4">
-          <h4>
-            <strong>Name :</strong> {userdata?.fullname || "N/A"}
-          </h4>
-          <h4>
-            <strong>Ref :</strong> {userdata?.customers_ref || ""}
-          </h4>
-          <h4>
-            <strong>Referred By Code :</strong>{" "}
-            {userdata?.referred_by_code || ""}
-          </h4>
-          <h4>
-            <strong>Invoice Date :</strong>{" "}
-            {moment(donor?.invoice_date).format("DD-MM-YYYY") || ""}
-          </h4>
-          <h4>
-            <strong>Year :</strong> {currentYear || ""}
-          </h4>
-        </div> */}
+     
         <div className="flex flex-col   items-center md:flex-row md:justify-between mb-4">
           <div>
             <p className="font-medium">
