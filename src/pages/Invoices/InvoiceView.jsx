@@ -336,13 +336,11 @@ function InvoiceView() {
                       Discount
                     </TableCell>
                     <TableCell
-                      // className="border-t font-bold text-center "
                       sx={{
                         fontWeight: 700,
                         fontSize: "15px",
                         color: "black",
                         textAlign: "end",
-                        // border: "1px solid #D1D5DB",
                         padding: "10px 20px 10px 0px",
                         height: "35px",
                         backgroundColor: grey[100],

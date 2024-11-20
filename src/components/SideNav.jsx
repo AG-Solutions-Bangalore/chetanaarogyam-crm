@@ -78,7 +78,6 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  {/* <HomeIcon className="w-5 h-5 text-inherit" /> */}
                   <MdSpaceDashboard className="w-5 h-5 text-inherit " />
 
                   <Typography
