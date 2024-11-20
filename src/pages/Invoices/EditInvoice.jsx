@@ -279,7 +279,7 @@ const EditInvoice = () => {
         {/* <h3 className="text-center md:text-left text-lg md:text-xl font-bold mb-4">
           Invoice
         </h3> */}
-        <div className="grid grid-cols-1 items-center text-center md:text-left md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {/* <div className="grid grid-cols-1 items-center text-center md:text-left md:grid-cols-3 lg:grid-cols-5 gap-4">
           <h4>
             <strong>Name :</strong> {userdata?.fullname || "N/A"}
           </h4>
@@ -297,7 +297,42 @@ const EditInvoice = () => {
           <h4>
             <strong>Year :</strong> {currentYear || ""}
           </h4>
+        </div> */}
+        <div className="flex flex-col   items-center md:flex-row md:justify-between mb-4">
+          <div>
+            <p className="font-medium">
+              Name:{" "}
+              <span className="font-normal">{userdata?.fullname || "N/A"}</span>
+            </p>
+            <p className="font-medium">
+              Ref :{" "}
+              <span className="font-normal">
+                {" "}
+                {userdata?.customers_ref || ""}
+              </span>
+            </p>
+            <p className="font-medium">
+              Referred By Code :{" "}
+              <span className="font-normal">
+                {" "}
+                {userdata?.referred_by_code || ""}
+              </span>
+            </p>
+          </div>
+          <div>
+            <p className="font-medium">
+              Invoice Date :{" "}
+              <span className="font-normal">
+                {" "}
+                {moment(donor?.invoice_date).format("DD-MM-YYYY") || ""}
+              </span>
+            </p>
+            <p className="font-medium">
+              Year : <span className="font-normal"> {currentYear || ""}</span>
+            </p>
+          </div>
         </div>
+
         <form id="addIndiv" onSubmit={onSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
             <TextField
