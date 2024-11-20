@@ -140,7 +140,7 @@ const Home = () => {
         <div className="mt-10">
           {fullClose && (
             <div className="container mx-auto col-span-2">
-              <div className="flex justify-between bg-white p-4 rounded-sm">
+              <div className="flex justify-between bg-white p-4 rounded-t-lg">
                 <div className="content-center">
                   {userid === "2" ? (
                     <h1>Latest Enquires</h1>
