@@ -79,9 +79,7 @@ const Profile = () => {
         toast.error("Duplicate Entry of Email");
       } else {
         toast.success("Profile Updated Successfully!");
-        setTimeout(() => {
-          // navigate("/home");
-        }, 2000);
+    
       }
     } catch (error) {
       console.error("Profile update failed:", error);
@@ -103,7 +101,6 @@ const Profile = () => {
     const data = {
       old_password: oldPassword,
       password: newPassword,
-      // confirm_password: confirmPassword,
       username: localStorage.getItem("username"),
     };
 
@@ -118,9 +115,7 @@ const Profile = () => {
       setNewPassword("");
       setConfirmPassword("");
       setOpenDialog(false);
-      // setTimeout(() => {
-      //   navigate("/home");
-      // }, 2000);
+   
     } catch (error) {
       console.error("Password change failed:", error);
       toast.error("Please enter valid old password");

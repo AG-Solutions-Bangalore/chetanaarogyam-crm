@@ -152,14 +152,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
                 />
               </IconButton>
             </MenuHandler>
-            {/* Uncomment the MenuList if needed */}
-            {/* <MenuList className="bg-gray-700">
-    <MenuItem>
-      <Link to="/profile" className="text-white">
-        Profile
-      </Link>
-    </MenuItem>
-  </MenuList> */}
+
           </Menu>
 
           {/* Logout */}

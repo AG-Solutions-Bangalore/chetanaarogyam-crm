@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export function Footer() {
-  // const year = new Date().getFullYear();
   const brandName = "AG Solutions";
   const brandLink = "https://www.ag-solutions.in";
   const [currentYear, setCurrentYear] = useState("");
