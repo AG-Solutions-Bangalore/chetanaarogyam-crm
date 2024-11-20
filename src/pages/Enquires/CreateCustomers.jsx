@@ -123,7 +123,7 @@ function CreateCustomers() {
         },
       }).then((res) => {
         if (res.data.code == "200") {
-          toast.success("Data Inserted Sucessfully");
+          toast.success("Customer Created Sucessfully");
           navigate("/customer");
         } else {
           toast.error("Duplicate Entry");
@@ -135,7 +135,7 @@ function CreateCustomers() {
   return (
     <Layout>
       <Box bgcolor="#FFFFFF" p={2} borderRadius={2} mt={4}>
-        <PageTitle title="Create Customers" backLink="/customer" />
+        <PageTitle title="Create Customers" backLink="/enquire" />
 
         <form id="dowRecp" autoComplete="off" onSubmit={onSubmit}>
           <Box
@@ -144,7 +144,6 @@ function CreateCustomers() {
               xs: "1fr",
               sm: "1fr 1fr",
               md: "1fr 1fr 1fr",
-              lg: "1fr 1fr 1fr 1fr",
             }}
             gap={2}
             mt={2}
@@ -178,6 +177,15 @@ function CreateCustomers() {
               value={enquires.email_id || ""}
               onChange={onInputChange}
             />
+          </Box>
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              xs: "1fr",
+            }}
+            gap={2}
+            mt={2}
+          >
             <TextField
               size="small"
               fullWidth
@@ -187,6 +195,17 @@ function CreateCustomers() {
               value={enquires.address || ""}
               onChange={onInputChange}
             />
+          </Box>
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              xs: "1fr",
+              sm: "1fr 1fr",
+              md: "1fr 1fr 1fr",
+            }}
+            gap={2}
+            mt={2}
+          >
             <TextField
               size="small"
               fullWidth
@@ -197,7 +216,7 @@ function CreateCustomers() {
               onChange={onInputChange}
             />
             <FormControl fullWidth size="small">
-              <InputLabel>Service</InputLabel>
+              <InputLabel>Service *</InputLabel>
               <Select
                 label="Service"
                 name="interested_in"
@@ -212,15 +231,6 @@ function CreateCustomers() {
                 ))}
               </Select>
             </FormControl>
-
-            <TextField
-              fullWidth
-              label="Remarks"
-              size="small"
-              name="remarks"
-              value={enquires.remarks || ""}
-              onChange={onInputChange}
-            />
             <TextField
               fullWidth
               label="Referred By Code"
@@ -230,17 +240,34 @@ function CreateCustomers() {
               onChange={onInputChange}
             />
           </Box>
+          <Box
+            display="grid"
+            gridTemplateColumns={{
+              xs: "1fr",
+            }}
+            gap={2}
+            mt={2}
+          >
+            <TextField
+              fullWidth
+              label="Remarks"
+              size="small"
+              name="remarks"
+              value={enquires.remarks || ""}
+              onChange={onInputChange}
+            />
+          </Box>
 
-          <Box display="flex" gap={2} mt={3}>
+          <Box display="flex" gap={2} mt={3} sx={{ justifyContent: "center" }}>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               type="submit"
             >
               Submit
             </button>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
-              onClick={() => navigate("/customer")}
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
+              onClick={() => navigate("/enquire")}
             >
               Back
             </button>

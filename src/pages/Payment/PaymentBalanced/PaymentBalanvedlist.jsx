@@ -7,6 +7,7 @@ import Layout from "../../../layout/Layout";
 import BASE_URL from "../../../base/BaseUrl";
 import { MdEdit } from "react-icons/md";
 import Payment from "../../../components/Payment";
+import { toast } from "react-toastify";
 const PaymentBalancelist = () => {
   const [payment, setPayment] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ const PaymentBalancelist = () => {
       let response = res.data.balance;
 
       setPayment(response || []);
+      toast.success("Payment Closed Sucessfully");
     });
   };
   const columns = [

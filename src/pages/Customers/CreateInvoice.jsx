@@ -276,16 +276,14 @@ const CreateInvoice = () => {
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold mb-4">
           Invoice
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <h4>
             <strong>Name :</strong> {userdata.fullname}
           </h4>
           <h4>
             <strong>Ref :</strong> {userdata.customers_ref}
           </h4>
-          <h4>
-            <strong>Referred By Code :</strong> {userdata.referred_by_code}
-          </h4>
+
           <h4>
             <strong>Invoice Date :</strong>{" "}
             {moment(donor.invoice_date).format("DD-MM-YYYY")}
@@ -293,20 +291,33 @@ const CreateInvoice = () => {
           <h4>
             <strong>Year :</strong> {finalyear}
           </h4>
+          <h4>
+            <strong>Referred By Code :</strong> {userdata.referred_by_code}
+          </h4>
         </div>
         <form id="addIndiv" onSubmit={onSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
-            <TextField
-              label="Total Amount"
-              inputProps={{ maxLength: 8 }}
-              name="invoice_amount"
-              value={donor.invoice_amount}
-              onChange={(e) => onInputChange(e)}
-              required
-              disabled
-              fullWidth
-              size="small"
-            />
+            <div className="cursor-pointer">
+              <TextField
+                label="Total Amount"
+                inputProps={{ maxLength: 8 }}
+                name="invoice_amount"
+                value={donor.invoice_amount}
+                onChange={(e) => onInputChange(e)}
+                required
+                disabled
+                fullWidth
+                size="small"
+                sx={{
+                  "& .MuiInputBase-root": {
+                    cursor: "not-allowed",
+                  },
+                  "& .Mui-disabled": {
+                    cursor: "not-allowed",
+                  },
+                }}
+              />
+            </div>
             <TextField
               fullWidth
               label="Discount"
@@ -375,21 +386,21 @@ const CreateInvoice = () => {
             </div>
           ))}
           <button
-            className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md "
+            className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md "
             onClick={addItem}
             disabled={isAddMoreDisabled()}
           >
             Add More{" "}
           </button>{" "}
-          <div className="flex justify-center  mt-4">
+          <div className="flex justify-center  mt-4 jus">
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               type="submit"
             >
               Submit{" "}
             </button>{" "}
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md mx-2"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md ml-4"
               onClick={() => {
                 navigate("/customer");
               }}

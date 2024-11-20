@@ -120,7 +120,7 @@ function EditService() {
               inputProps={{ maxLength: 10 }}
             />
             <FormControl fullWidth size="small">
-              <InputLabel>Status</InputLabel>
+              <InputLabel>Status *</InputLabel>
               <Select
                 label="Status"
                 name="service_status"
@@ -136,15 +136,15 @@ function EditService() {
               </Select>
             </FormControl>
           </Box>
-          <Box display="flex" gap={2} mt={3}>
+          <Box display="flex" gap={2} mt={3} sx={{ justifyContent: "center" }}>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               type="submit"
             >
               Update
             </button>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-red-600 hover:bg-red-900 p-2 rounded-lg shadow-md"
               onClick={() => {
                 navigate("/master-service");
               }}

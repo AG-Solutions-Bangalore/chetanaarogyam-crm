@@ -67,7 +67,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
           <XMarkIcon strokeWidth={2.5} className="h-5 w-5 text-white" />
         </IconButton>
       </div>
-      <div className="m-4">
+      <div className="m-4 relative">
         <ul className="mb-4 flex flex-col gap-1">
           <li>
             <NavLink to="/home">
@@ -269,6 +269,12 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </>
           )}
         </ul>
+      </div>
+      <div className="flex justify-center">
+        {" "}
+        <h1 className="text-white border-dashed-orange-600  text-sm absolute bottom-4">
+          Updated on :Nov 20th,2024
+        </h1>
       </div>
     </aside>
   );

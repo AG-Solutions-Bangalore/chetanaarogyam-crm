@@ -6,6 +6,7 @@ import { Button, Tooltip, IconButton, CircularProgress } from "@mui/material";
 import Layout from "../../layout/Layout";
 import BASE_URL from "../../base/BaseUrl";
 import { FaUserCheck } from "react-icons/fa";
+import { RiUserAddLine } from "react-icons/ri";
 const Enquires = () => {
   const [enquiryData, setEnquiryData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ const Enquires = () => {
     },
     {
       name: "fullname",
-      label: "Service",
+      label: "Full Name",
       options: { filter: true, sort: false },
     },
     {
@@ -67,12 +68,12 @@ const Enquires = () => {
     },
     {
       name: "area",
-      label: "Status",
+      label: "Area",
       options: { filter: true, sort: false },
     },
     {
       name: "interested_in",
-      label: "Status",
+      label: "Service",
       options: { filter: true, sort: false },
     },
     {
@@ -86,22 +87,26 @@ const Enquires = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (id) => {
+        customBodyRender: (id, tableMeta) => {
           const stringId = String(id);
+          const status = tableMeta.rowData[5];
+
           return (
             <div className="flex items-center">
-              <Tooltip title="To Convert Customers" placement="top">
-                <IconButton>
-                  <Link
-                    to={
-                      `/customer-add/${id}`
-                      // stringId.substring(stringId.indexOf("#") + 1)
-                    }
-                  >
-                    <FaUserCheck className="text-blue-600" />
-                  </Link>
-                </IconButton>
-              </Tooltip>
+              {status === "Enquire" && (
+                <Tooltip title="To Convert Customers" placement="top">
+                  <IconButton>
+                    <Link
+                      to={
+                        `/customer-add/${id}`
+                        // stringId.substring(stringId.indexOf("#") + 1)
+                      }
+                    >
+                      <RiUserAddLine className="text-blue-600" />
+                    </Link>
+                  </IconButton>
+                </Tooltip>
+              )}
             </div>
           );
         },
@@ -142,7 +147,7 @@ const Enquires = () => {
               Enquires List
             </h3>
             <button
-              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse md:text-right text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
+              className="text-center text-sm font-[400] cursor-pointer hover:animate-pulse w-36 text-white bg-blue-600 hover:bg-teal-700 p-2 rounded-lg shadow-md"
               onClick={handleservice}
             >
               + Add Enquires{" "}

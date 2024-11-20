@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Typography,
@@ -24,6 +24,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
   const [openModal, setOpenModal] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [shareMenuOpen, setShareMenuOpen] = useState(false);
+  // const elementRef = useRef(null);
 
   const pathSegments = pathname.split("/").filter((el) => el !== "");
 
@@ -31,7 +32,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
     { name: "Home", link: "/home" },
     ...pathSegments.slice(0, 1).map((segment, index) => ({
       name: segment.charAt(0).toUpperCase() + segment.slice(1),
-      link: `/home/${segment}`,
+      // link: `/home/${segment}`,
     })),
   ];
 
@@ -61,6 +62,8 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
   };
 
   const handleOpenLogout = () => setOpenModal(!openModal);
+  const navigate = useNavigate();
+
 
   return (
     <Navbar
@@ -143,16 +146,20 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
                 color="orange"
                 aria-label="Profile Options"
               >
-                <UserCircleIcon className="h-5 w-5 text-yellow-700" />
+                <UserCircleIcon
+                  className="h-5 w-5 text-yellow-700"
+                  onClick={() => navigate("/profile")}
+                />
               </IconButton>
             </MenuHandler>
-            <MenuList className="bg-gray-700">
-              <MenuItem>
-                <Link to="/profile" className="text-white">
-                  Profile
-                </Link>
-              </MenuItem>
-            </MenuList>
+            {/* Uncomment the MenuList if needed */}
+            {/* <MenuList className="bg-gray-700">
+    <MenuItem>
+      <Link to="/profile" className="text-white">
+        Profile
+      </Link>
+    </MenuItem>
+  </MenuList> */}
           </Menu>
 
           {/* Logout */}

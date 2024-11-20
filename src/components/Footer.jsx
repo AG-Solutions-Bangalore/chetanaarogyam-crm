@@ -27,19 +27,25 @@ export function Footer() {
     fetchYearData();
   }, []);
   return (
-    <footer className="bg-gray-800 text-white p-4 text-center rounded-lg  xl:ml-80 mb-3 mx-3 shadow-lg shadow-blue-900">
-      <div className="flex w-full flex-wrap items-center justify-center gap-6 px-2">
-        <Typography variant="small" className="font-normal text-inherit">
-          Copyright@ {currentYear} by
+    <footer className="bg-gray-800 text-white p-4 rounded-lg shadow-lg shadow-blue-900 xl:ml-80 mb-3 mx-3 text-center">
+      <div className="flex flex-col md:flex-row w-full flex-wrap items-center justify-between gap-4 px-2">
+        {/* Current Year Section */}
+        <div className="w-full md:w-auto text-sm">
+          Current Year - {currentYear}
+        </div>
+
+        {/* Brand Section */}
+        <div className="w-full md:w-auto text-sm">
+          Handcrafted with love by{" "}
           <a
             href={brandLink}
             target="_blank"
+            rel="noopener noreferrer"
             className="transition-colors hover:text-blue-500 font-bold"
           >
             {brandName}
-          </a>{" "}
-          . All rights reserved.
-        </Typography>
+          </a>
+        </div>
       </div>
     </footer>
   );
