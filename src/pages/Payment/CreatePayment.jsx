@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../layout/Layout";
 import Moment from "moment";
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import moment from "moment";
 const details_type = [
   {
     value: "Cash",
@@ -107,10 +108,74 @@ function CreatePayment() {
       });
     }
   };
+  const [donor, setDonor] = useState({});
 
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    axios({
+      url: BASE_URL + "/api/panel-fetch-invoice-by-id/" + id,
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      setDonor(res.data.invoice);
+      setUsers(res.data.invoiceSub);
+    });
+  }, []);
+  const [userdata, setUserdata] = useState("");
+
+  const FetchCustomers = () => {
+    axios({
+      url: `${BASE_URL}/api/panel-fetch-customers-by-value/${donor.customers_ref}`,
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      setUserdata(res.data.customer);
+    });
+  };
+
+  useEffect(() => {
+    if (donor?.customers_ref) {
+      FetchCustomers();
+    }
+  }, [donor?.customers_ref]);
   return (
     <Layout>
       <Box bgcolor="#FFFFFF" p={2} borderRadius={2} mt={4}>
+        <div className="flex justify-center items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <p className="font-medium">
+              Name:{" "}
+              <span className="font-normal">{userdata?.fullname || "N/A"}</span>
+            </p>
+            <p className="font-medium">
+              Ref:{" "}
+              <span className="font-normal">
+                {donor?.customers_ref || "N/A"}
+              </span>
+            </p>
+            <p className="font-medium">
+              Amount:{" "}
+              <span className="font-normal">
+                {donor?.invoice_amount || "N/A"}
+              </span>
+            </p>
+            <div>
+              <p className="font-medium">
+                Invoice Date:{" "}
+                <span className="font-normal">
+                  {donor?.invoice_date
+                    ? moment(donor.invoice_date).format("DD-MM-YYYY")
+                    : "N/A"}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
         <PageTitle title="Create Payment" backLink="/invoice" />
 
         <form id="dowRecp" autoComplete="off" onSubmit={onSubmit}>

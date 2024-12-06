@@ -25,6 +25,9 @@ import {
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import TableFooter from "@mui/material/TableFooter";
+import moment from "moment";
+import { FaRegFilePdf } from "react-icons/fa";
+import { BsFiletypePdf } from "react-icons/bs";
 
 function InvoiceView() {
   const [theId, setTheId] = useState(0);
@@ -124,8 +127,6 @@ function InvoiceView() {
   return (
     <Layout>
       <div className="mt-3">
-       
-
         <div className="flex  md:flex-row justify-between items-center p-3 space-y-4 md:space-y-0">
           {/* Page Title on the left */}
           <div className="w-full md:w-auto">
@@ -144,8 +145,8 @@ function InvoiceView() {
                   localStorage.getItem("user_type_id") == 4 ? "none" : "",
               }}
             >
-              <LuDownload className="text-lg" />
-              <span className="hidden sm:inline">Download</span>{" "}
+              <BsFiletypePdf className="text-lg" />
+              <span className="hidden sm:inline">PDF</span>{" "}
               {/* Show text only on sm and larger */}
             </button>
 
@@ -168,7 +169,7 @@ function InvoiceView() {
               trigger={() => (
                 <button variant="text" className="flex items-center space-x-2">
                   <IoMdPrint />
-                  <span className="hidden sm:inline">Print Receipt</span>
+                  <span className="hidden sm:inline">Print</span>
                 </button>
               )}
               content={() => componentRef.current}
@@ -198,7 +199,7 @@ function InvoiceView() {
 
           <div className="w-full max-w-4xl  p-4 ">
             {/* Client Details */}
-            <div className="flex flex-col  md:flex-row md:justify-between mb-4">
+            <div className="flex   md:flex-row md:justify-between mb-4">
               <div>
                 <p className="font-medium">
                   Name: <span className="font-normal">{customer.fullname}</span>
@@ -207,11 +208,17 @@ function InvoiceView() {
                   Address:{" "}
                   <span className="font-normal"> {customer.address}</span>
                 </p>
-              </div>
-              <div>
                 <p className="font-medium">
                   Contact Number:{" "}
                   <span className="font-normal"> {customer.mobile_no}</span>
+                </p>
+              </div>
+              <div>
+                <p className="font-medium">
+                  Invoice Date:{" "}
+                  <span className="font-normal">
+                    {moment(invoices.invoice_date).format("DD-MM-YYYY")}
+                  </span>
                 </p>
                 <p className="font-medium">
                   INV Ref:{" "}
@@ -226,7 +233,6 @@ function InvoiceView() {
               className="shadow-none"
             >
               <Table className="table-auto border-collapse border border-gray-300">
-          
                 <TableHead className="bg-gray-100">
                   <TableRow>
                     <TableCell
@@ -263,7 +269,6 @@ function InvoiceView() {
                     <TableRow key={index}>
                       <TableCell
                         sx={{
-                      
                           borderRight: "1px solid #D1D5DB",
                           padding: "10px 20px 10px 5px",
 
@@ -289,9 +294,7 @@ function InvoiceView() {
                 </TableBody>
                 <TableFooter>
                   <TableRow>
-
                     <TableCell
-                
                       sx={{
                         fontWeight: 700,
                         fontSize: "15px",
@@ -320,7 +323,6 @@ function InvoiceView() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-
                     <TableCell
                       sx={{
                         fontWeight: 700,
@@ -350,7 +352,6 @@ function InvoiceView() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-
                     <TableCell
                       sx={{
                         fontWeight: 700,

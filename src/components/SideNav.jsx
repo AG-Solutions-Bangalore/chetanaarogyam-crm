@@ -272,7 +272,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
       <div className="flex justify-center">
         {" "}
         <h1 className="text-white border-dashed-orange-600  text-sm absolute bottom-4">
-          Updated on :Nov 20th,2024
+          Updated on :Dec 06th,2024
         </h1>
       </div>
     </aside>

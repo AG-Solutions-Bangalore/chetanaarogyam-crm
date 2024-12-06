@@ -8,7 +8,7 @@ import AppProvider from "./utils/ContextPanel.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter basename={"/admin"}>
+    <BrowserRouter >
       <AppProvider>
         <ThemeProvider>
           <App />

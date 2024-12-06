@@ -232,7 +232,6 @@ const EditInvoice = () => {
       },
     }).then((res) => {
       setUserdata(res.data.customer);
-      //   setLoader(false);
     });
   };
 
@@ -252,7 +251,9 @@ const EditInvoice = () => {
       .then((data) => setServices(data.service));
   };
   useEffect(() => {
-    FetchCustomers();
+    if (donor?.customers_ref) {
+      FetchCustomers();
+    }
     FetchServices();
     fetchYearData();
   }, [donor.customers_ref]);
@@ -276,7 +277,6 @@ const EditInvoice = () => {
     <Layout>
       <PageTitle title={"Edit Invoice"} backLink={"/invoice"}></PageTitle>
       <Card className="p-6 mt-4">
-     
         <div className="flex flex-col   items-center md:flex-row md:justify-between mb-4">
           <div>
             <p className="font-medium">
